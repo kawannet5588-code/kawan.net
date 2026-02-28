@@ -221,6 +221,24 @@
     </footer>
 
    <script>
+       document.querySelectorAll('.nav-links a[href^="#"], .btn-primary[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault(); // Mencegah browser melompat kasar
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    // Jarak pengereman disetel 190px agar pas dengan logo besar Kawan Net
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - 190;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth' // Memaksa guliran menjadi super halus
+                    });
+                }
+            });
+        });
         // Fungsi untuk format angka jadi Rupiah (Rp 50.000)
         function formatRupiah(angka) {
             let numberString = angka.toString().replace(/[^,\d]/g, '');
