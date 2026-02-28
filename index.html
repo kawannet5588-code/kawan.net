@@ -28,7 +28,7 @@
             padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
         }
         .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .logo img { height: 45px; }
+        .logo img { height: 70px; }
         .logo span { font-weight: 800; font-size: 22px; color: var(--dark); letter-spacing: -0.5px; }
         
         .nav-links { display: flex; gap: 30px; }
@@ -214,20 +214,32 @@
         <a href="#" class="staff-link">🔒 Portal Staf Internal</a>
     </footer>
 
-    <script>
+   <script>
         function cekStatus() {
             const id = document.getElementById('idPelanggan').value.trim();
             const hasilDiv = document.getElementById('hasilCek');
             
-            // 💡 MASUKKAN LINK WEB APP GAS BAPAK DI SINI:
+            // 💡 PASTIKAN LINK INI SUDAH BENAR MILIK BAPAK:
             const urlAPI = "https://script.google.com/macros/s/AKfycbzuX60x0FznRreXKORnFGAFU_8dIC8Q9kNWS53X8ENyTthBTid7XlPy-hjqmKtY-Q0Vkw/exec"; 
 
             if(!id) {
-                Swal.fire('Oops', 'Mohon ketik ID Pelanggan Anda terlebih dahulu!', 'warning');
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Oops...',
+                    text: 'Mohon ketik ID Pelanggan Anda terlebih dahulu!',
+                    confirmButtonColor: '#2563eb',
+                    borderRadius: '20px'
+                });
                 return;
             }
 
-            hasilDiv.innerHTML = `<div style="padding:20px; background:#f8fafc; border-radius:15px; text-align:center; color:var(--primary); font-weight:600;">⏳ Sedang mencari data ${id}...</div>`;
+            // Animasi Loading Modern
+            hasilDiv.innerHTML = `
+                <div style="padding:40px; background:white; border-radius:24px; text-align:center; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.05); border: 1px solid #f1f5f9;">
+                    <div style="display:inline-block; width:40px; height:40px; border:4px solid #e2e8f0; border-top-color:#2563eb; border-radius:50%; animation:spin 1s linear infinite;"></div>
+                    <p style="margin-top:15px; color:#64748b; font-weight:600;">Memeriksa server Kawan Net...</p>
+                    <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
+                </div>`;
 
             fetch(urlAPI + "?id=" + id)
             .then(response => {
@@ -236,21 +248,57 @@
             })
             .then(data => {
                 if(data.sukses) {
+                    // Tampilan Sukses (Kartu Modern Melayang)
+                    const isAktif = data.status === 'Aktif';
+                    const colorMain = isAktif ? '#10b981' : '#ef4444'; // Hijau atau Merah
+                    const colorBg = isAktif ? '#ecfdf5' : '#fef2f2';
+                    const colorText = isAktif ? '#065f46' : '#991b1b';
+
                     hasilDiv.innerHTML = `
-                        <div style="background: #f0fdf4; padding: 25px; border-radius: 16px; border: 1px solid #bbf7d0;">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; padding-bottom:15px; border-bottom:1px solid #dcfce7;">
-                                <h4 style="color:#166534; font-size:18px;">✅ Data Ditemukan</h4>
-                                <span style="background:${data.status === 'Aktif' ? '#22c55e' : '#ef4444'}; color:white; padding:4px 12px; border-radius:50px; font-size:12px; font-weight:700;">${data.status}</span>
+                        <div style="background: white; padding: 35px; border-radius: 24px; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); border: 1px solid #f1f5f9; text-align: left; position: relative; overflow: hidden; transform: translateY(-5px); transition: 0.3s;">
+                            <div style="position: absolute; top: 0; left: 0; width: 6px; height: 100%; background: ${colorMain};"></div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed #f1f5f9; padding-bottom: 20px; margin-bottom: 25px;">
+                                <div>
+                                    <p style="font-size: 12px; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">ID Pelanggan</p>
+                                    <h4 style="font-size: 22px; color: #0f172a; font-weight: 800;">${data.id || id}</h4>
+                                </div>
+                                <div style="background: ${colorBg}; color: ${colorText}; padding: 8px 18px; border-radius: 50px; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+                                    <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:${colorMain}; box-shadow: 0 0 8px ${colorMain};"></span>
+                                    ${data.status}
+                                </div>
                             </div>
-                            <p style="margin-bottom:8px; color:#1e293b;"><b>Nama:</b> ${data.nama}</p>
-                            <p style="margin-bottom:8px; color:#1e293b;"><b>Paket:</b> ${data.paket}</p>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+                                <div>
+                                    <p style="font-size: 13px; color: #64748b; margin-bottom: 6px;">Nama Pelanggan</p>
+                                    <p style="font-size: 18px; color: #0f172a; font-weight: 700;">${data.nama}</p>
+                                </div>
+                                <div>
+                                    <p style="font-size: 13px; color: #64748b; margin-bottom: 6px;">Paket Internet</p>
+                                    <p style="font-size: 18px; color: #0f172a; font-weight: 700;">${data.paket}</p>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #f1f5f9; display: flex; align-items: center; gap: 10px;">
+                                <span style="font-size: 20px;">📞</span>
+                                <p style="font-size: 13px; color: #64748b;">Butuh bantuan layanan? <a href="https://wa.me/6285602533346" style="color: #2563eb; font-weight: 700; text-decoration: none;">Hubungi Admin</a></p>
+                            </div>
                         </div>`;
                 } else {
-                    hasilDiv.innerHTML = `<div style="padding:20px; background:#fef2f2; color:#b91c1c; border-radius:16px; border:1px solid #fecaca; text-align:center;">❌ ${data.pesan}</div>`;
+                    // Tampilan Gagal (Pesan Error Elegan)
+                    hasilDiv.innerHTML = `
+                        <div style="padding: 30px; background: white; border-radius: 24px; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.05); border: 1px solid #fef2f2; text-align: center;">
+                            <div style="display:inline-flex; align-items:center; justify-content:center; width:60px; height:60px; background:#fef2f2; border-radius:50%; margin-bottom:15px;">
+                                <span style="font-size: 24px;">❌</span>
+                            </div>
+                            <h4 style="color:#0f172a; font-size:18px; font-weight:700; margin-bottom:10px;">Data Tidak Ditemukan</h4>
+                            <p style="color:#64748b; font-size:14px;">${data.pesan}. Pastikan Anda mengetikkan ID dengan benar.</p>
+                        </div>`;
                 }
             })
             .catch(error => {
-                hasilDiv.innerHTML = `<div style="padding:20px; background:#fff7ed; color:#c2410c; border-radius:16px; text-align:center;">⚠️ Terjadi gangguan koneksi ke server.</div>`;
+                hasilDiv.innerHTML = `<div style="padding:20px; background:white; color:#c2410c; border-radius:16px; border:1px solid #ffedd5; text-align:center;">⚠️ Terjadi gangguan koneksi ke server Kawan Net.</div>`;
             });
         }
     </script>
