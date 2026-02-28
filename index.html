@@ -124,6 +124,35 @@
             .input-group { flex-direction: column; }
             .input-group button { padding: 16px; }
         }
+            /* CSS Tambahan untuk Peta Modern */
+        
+        /* 1. Efek Titik Berdenyut (Pulse Animation) */
+        @keyframes pulse-modern {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(2); opacity: 0; }
+            100% { transform: scale(1); opacity: 0; }
+        }
+
+        /* 2. Gaya Popup Modern (Glassmorphism) */
+        .leaflet-popup-content-wrapper {
+            background: rgba(255, 255, 255, 0.7) !important;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            color: #0f172a;
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+        }
+        .leaflet-popup-tip { background: rgba(255, 255, 255, 0.7) !important; backdrop-filter: blur(10px); }
+        .leaflet-popup-close-button { color: #64748b !important; padding: 10px !important; }
+
+        /* 3. Gaya Judul Peta Gradasi */
+        .modern-title {
+            background: linear-gradient(to right, #2563eb, #06b6d4);
+            -webkit-background-clip: text; color: transparent;
+            font-weight: 800; font-size: 20px;
+        }
     </style>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -232,6 +261,7 @@
     </footer>
 
    <script>
+       const urlAPI = "https://script.google.com/macros/s/AKfycbzuX60x0FznRreXKORnFGAFU_8dIC8Q9kNWS53X8ENyTthBTid7XlPy-hjqmKtY-Q0Vkw/exec"; 
        document.querySelectorAll('.nav-links a[href^="#"], .btn-primary[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault(); // Mencegah browser melompat kasar
@@ -260,9 +290,6 @@
         function cekStatus() {
             const id = document.getElementById('idPelanggan').value.trim();
             const hasilDiv = document.getElementById('hasilCek');
-            
-            // 💡 PASTIKAN LINK INI SUDAH BENAR MILIK BAPAK:
-            const urlAPI = "https://script.google.com/macros/s/AKfycbzuX60x0FznRreXKORnFGAFU_8dIC8Q9kNWS53X8ENyTthBTid7XlPy-hjqmKtY-Q0Vkw/exec"; 
 
             if(!id) {
                 Swal.fire({ icon: 'warning', title: 'Oops...', text: 'Mohon ketik ID Pelanggan Anda terlebih dahulu!', confirmButtonColor: '#2563eb', borderRadius: '20px' });
@@ -340,39 +367,68 @@
             });
         }
        // ==========================================
-        // KODE PENGGERAK PETA PELANGGAN
+        // KODE PENGGERAK PETA MODERN KAWAN NET
         // ==========================================
-        // Set titik tengah peta di Pekalongan
-        const map = L.map('map').setView([-6.8898, 109.6745], 13); 
+        
+        // 1. Inisialisasi Peta (Titik tengah Pekalongan)
+        const map = L.map('map', {
+            zoomControl: false, // Matikan tombol zoom standar
+            attributionControl: false // Matikan tulisan Leaflet standar
+        }).setView([-6.8898, 109.6745], 13); 
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap | Kawan Net Pekalongan'
+        // 2. Pasang Peta Dasar Modern (CartoDB Voyager - Terang & Bersih)
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
+            maxZoom: 20
         }).addTo(map);
 
-        // Memanggil titik pelanggan dari server
-        // (Pastikan variabel urlAPI Bapak yang di atas bisa diakses dari sini)
+        // Pasang Label Jalan (Opsional, agar tetap terbaca)
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png').addTo(map);
+
+        // Tambahkan tombol zoom di pojok kanan bawah agar lebih rapi
+        L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+        // 3. Memanggil Titik Jaringan dari Server
         fetch(urlAPI + "?aksi=peta")
             .then(res => res.json())
             .then(data => {
                 data.forEach(p => {
                     if(p.lat && p.lng) {
-                        // Jika Aktif = Hijau, selain itu Merah
-                        const warnaMarker = (p.status === 'Aktif') ? '#10b981' : '#ef4444'; 
+                        const isAktif = (p.status === 'Aktif');
                         
-                        L.circleMarker([p.lat, p.lng], {
-                            radius: 7,
-                            fillColor: warnaMarker,
-                            color: "#ffffff",
-                            weight: 2,
-                            opacity: 1,
-                            fillOpacity: 0.9
+                        // Set Warna Gradasi (Aktif = Blue/Cyan, Lainnya = Merah/Orange)
+                        const warnaUtama = isAktif ? '#2563eb' : '#ef4444'; // Biru atau Merah
+                        const warnaCyan  = isAktif ? '#06b6d4' : '#f97316'; // Cyan atau Orange
+                        
+                        // Gabungan Denyut dan Titik Utama dalam Satu Container
+                        const modernMarkerHtml = `
+                            <div style="position:relative; width:18px; height:18px; display:flex; align-items:center; justify-content:center;">
+                                <div style="position:absolute; width:100%; height:100%; border-radius:50%; background:${warnaUtama}; animation:pulse-modern 2s infinite;"></div>
+                                <div style="position:relative; width:10px; height:10px; border-radius:50%; background:linear-gradient(135deg, ${warnaUtama}, ${warnaCyan}); border:2px solid white; box-shadow:0 0 10px rgba(37,99,235,0.4);"></div>
+                            </div>
+                        `;
+
+                        // Tampilkan Titik di Peta menggunakan DivIcon
+                        L.marker([p.lat, p.lng], {
+                            icon: L.divIcon({
+                                className: 'modern-marker',
+                                html: modernMarkerHtml,
+                                iconSize: [18, 18],
+                                iconAnchor: [9, 9]
+                            })
                         })
                         .addTo(map)
-                        .bindPopup(`<div style="font-family:'Plus Jakarta Sans', sans-serif;">
-                            <p style="font-size:10px; color:#64748b; margin:0;">Pelanggan</p>
-                            <h4 style="margin:2px 0 8px 0; color:#0f172a;">${p.nama}</h4>
-                            <span style="background:${p.status === 'Aktif' ? '#dcfce7' : '#fee2e2'}; color:${warnaMarker}; padding:3px 8px; border-radius:20px; font-size:11px; font-weight:700;">${p.status}</span>
-                        </div>`);
+                        // Popup Kaca yang sudah didesain di CSS atas
+                        .bindPopup(`
+                            <div style="min-width:200px; padding: 10px 0;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid rgba(0,0,0,0.05);">
+                                    <span style="font-size:10px; color:#64748b; font-weight:700; text-transform:uppercase; letter-spacing:1px;">Layanan Aktif</span>
+                                    <span style="background:${isAktif ? '#dcfce7' : '#fee2e2'}; color:${isAktif ? '#166534' : '#991b1b'}; padding:4px 10px; border-radius:50px; font-size:11px; font-weight:700; box-shadow:0 0 10px rgba(0,0,0,0.03);">${p.status}</span>
+                                </div>
+                                <p style="font-size:11px; color:#64748b; margin-bottom:3px;">Nama Pelanggan</p>
+                                <h4 class="modern-title" style="margin-bottom:5px;">${p.nama}</h4>
+                                <p style="font-size:11px; color:#64748b;">📍 Wilayah Pekalongan</p>
+                            </div>
+                        `);
                     }
                 });
             })
