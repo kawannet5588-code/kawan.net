@@ -150,15 +150,47 @@
 
     <script>
         function cekStatus() {
-            const id = document.getElementById('idPelanggan').value;
-            if(!id) {
-                Swal.fire('Opps', 'Masukkan ID Pelanggan dulu ya!', 'warning');
-                return;
-            }
-            // Nanti di sini kita hubungkan dengan Google Apps Script Bapak
-            document.getElementById('hasilCek').innerHTML = `<div style="padding:20px; background:#fff9db; border-radius:15px;">⏳ Mencari data ID <b>${id}</b> di sistem...</div>`;
-        }
+    const id = document.getElementById('idPelanggan').value.trim();
+    const hasilDiv = document.getElementById('hasilCek');
+    
+    // 💡 MASUKKAN LINK WEB APP GAS BAPAK DI SINI:
+    const urlAPI = "https://script.google.com/macros/s/AKfycbzuX60x0FznRreXKORnFGAFU_8dIC8Q9kNWS53X8ENyTthBTid7XlPy-hjqmKtY-Q0Vkw/exec"; 
 
+    if(!id) {
+        Swal.fire('Opps', 'Masukkan ID Pelanggan dulu ya!', 'warning');
+        return;
+    }
+
+    hasilDiv.innerHTML = `<div style="padding:20px; background:#eef2ff; border-radius:15px; border:1px dashed #0056b3;">⏳ Sedang mengambil data untuk ID <b>${id}</b>...</div>`;
+
+    // Proses memanggil data dari Google Sheets
+    fetch(`${urlAPI}?id=${id}`)
+    .then(response => response.json())
+    .then(data => {
+        if(data.sukses) {
+            // Tampilan jika ID Ditemukan
+            hasilDiv.innerHTML = `
+                <div style="background: white; padding: 25px; border-radius: 20px; border: 2px solid #28a745; text-align: left; box-shadow: 0 10px 20px rgba(0,0,0,0.05);">
+                    <h3 style="color:#28a745; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">✅ Data Ditemukan</h3>
+                    <p style="margin-bottom:8px;"><b>Nama:</b> ${data.nama}</p>
+                    <p style="margin-bottom:8px;"><b>Paket:</b> ${data.paket}</p>
+                    <p style="margin-bottom:15px;"><b>Status:</b> <span style="padding:4px 10px; border-radius:5px; background:${data.status === 'Aktif' ? '#dcfce7' : '#fee2e2'}; color:${data.status === 'Aktif' ? '#166534' : '#991b1b'}; font-weight:bold;">${data.status}</span></p>
+                    <div style="background:#f8fafc; padding:10px; border-radius:10px; font-size:12px; color:#64748b;">
+                        *Jika ada kendala pembayaran, silakan hubungi Admin Kawan Net melalui WhatsApp.
+                    </div>
+                </div>`;
+            Swal.fire({ icon: 'success', title: 'Data Berhasil Dimuat', showConfirmButton: false, timer: 1500 });
+        } else {
+            // Tampilan jika ID TIDAK Ditemukan
+            hasilDiv.innerHTML = `<div style="padding:20px; background:#fee2e2; color:#991b1b; border-radius:15px; border:1px solid #f87171;">❌ ${data.pesan}</div>`;
+            Swal.fire('Tidak Ditemukan', 'Pastikan ID yang Anda masukkan sudah benar.', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        hasilDiv.innerHTML = `<div style="padding:20px; background:#fff7ed; color:#9a3412; border-radius:15px;">⚠️ Terjadi gangguan koneksi. Silakan coba lagi nanti.</div>`;
+    });
+}
         function aksesInternal() {
             Swal.fire({
                 title: 'Akses Terbatas',
