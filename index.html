@@ -125,6 +125,8 @@
             .input-group button { padding: 16px; }
         }
     </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
 
@@ -211,7 +213,16 @@
             <div id="hasilCek" style="margin-top: 30px; text-align: left;"></div>
         </div>
     </section>
-
+<section id="peta-jaringan" style="background: white;">
+        <div class="section-header">
+            <h2>Jangkauan Kawan Net</h2>
+            <p>Peta sebaran pelanggan aktif kami di wilayah Pekalongan dan sekitarnya.</p>
+        </div>
+        
+        <div style="max-width: 1000px; margin: 0 auto; padding: 10px; background: white; border-radius: 24px; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.08); border: 1px solid #f1f5f9;">
+            <div id="map" style="height: 500px; border-radius: 16px; z-index: 1;"></div>
+        </div>
+    </section>
     <footer>
         <div class="footer-logo">
             <img src="https://lh3.googleusercontent.com/d/1v7aYOpLRpcM9iQM_mbmR2BQJXOm6iyij" alt="Kawan Net">
@@ -328,6 +339,44 @@
                 hasilDiv.innerHTML = `<div style="padding:20px; background:white; color:#c2410c; border-radius:16px; border:1px solid #ffedd5; text-align:center;">⚠️ Terjadi gangguan koneksi ke server.</div>`;
             });
         }
+       // ==========================================
+        // KODE PENGGERAK PETA PELANGGAN
+        // ==========================================
+        // Set titik tengah peta di Pekalongan
+        const map = L.map('map').setView([-6.8898, 109.6745], 13); 
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap | Kawan Net Pekalongan'
+        }).addTo(map);
+
+        // Memanggil titik pelanggan dari server
+        // (Pastikan variabel urlAPI Bapak yang di atas bisa diakses dari sini)
+        fetch(urlAPI + "?aksi=peta")
+            .then(res => res.json())
+            .then(data => {
+                data.forEach(p => {
+                    if(p.lat && p.lng) {
+                        // Jika Aktif = Hijau, selain itu Merah
+                        const warnaMarker = (p.status === 'Aktif') ? '#10b981' : '#ef4444'; 
+                        
+                        L.circleMarker([p.lat, p.lng], {
+                            radius: 7,
+                            fillColor: warnaMarker,
+                            color: "#ffffff",
+                            weight: 2,
+                            opacity: 1,
+                            fillOpacity: 0.9
+                        })
+                        .addTo(map)
+                        .bindPopup(`<div style="font-family:'Plus Jakarta Sans', sans-serif;">
+                            <p style="font-size:10px; color:#64748b; margin:0;">Pelanggan</p>
+                            <h4 style="margin:2px 0 8px 0; color:#0f172a;">${p.nama}</h4>
+                            <span style="background:${p.status === 'Aktif' ? '#dcfce7' : '#fee2e2'}; color:${warnaMarker}; padding:3px 8px; border-radius:20px; font-size:11px; font-weight:700;">${p.status}</span>
+                        </div>`);
+                    }
+                });
+            })
+            .catch(err => console.error("Gagal memuat peta: ", err));
     </script>
 </body>
 </html>
