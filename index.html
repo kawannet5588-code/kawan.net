@@ -257,7 +257,7 @@
             <img src="https://lh3.googleusercontent.com/d/1v7aYOpLRpcM9iQM_mbmR2BQJXOm6iyij" alt="Kawan Net">
         </div>
         <p class="copyright">© 2026 KAWAN NET Pekalongan. All Rights Reserved. <br>Bekerja sama dengan BUMDes.</p>
-        <a href="#" class="staff-link">🔒 Portal Staf Internal</a>
+        <a href="#" class="staff-link" onclick="bukaPortalStaf(event)">🔒 Portal Staf Internal</a>
     </footer>
 
    <script>
@@ -364,6 +364,86 @@
             })
             .catch(error => {
                 hasilDiv.innerHTML = `<div style="padding:20px; background:white; color:#c2410c; border-radius:16px; border:1px solid #ffedd5; text-align:center;">⚠️ Terjadi gangguan koneksi ke server.</div>`;
+            });
+        }// ==========================================
+        // FUNGSI PINTU RAHASIA (PORTAL STAF - 5 LINK)
+        // ==========================================
+        function bukaPortalStaf(event) {
+            event.preventDefault(); 
+            
+            Swal.fire({
+                title: '<strong>Portal Internal <span style="color:#2563eb">Kawan Net</span></strong>',
+                html: `
+                    <p style="font-size: 14px; color: #64748b; margin-bottom: 15px;">
+                        Silakan pilih sistem operasional:
+                    </p>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 10px; max-height: 350px; overflow-y: auto; padding-right: 5px;">
+                        
+                        <a href="https://script.google.com/macros/s/AKfycbyoHhDAE2Vmhu53avLrW2mXeXS-Z9ivIXzCZpk8neYG3XexrbXL4td3hFzqdWlLd1vZZg/exec" target="_blank" 
+                           style="background: #f8fafc; border: 2px solid #e2e8f0; padding: 12px 15px; border-radius: 12px; text-decoration: none; color: #0f172a; display: flex; align-items: center; gap: 15px; transition: 0.3s;"
+                           onmouseover="this.style.borderColor='#2563eb'; this.style.backgroundColor='#eff6ff'" 
+                           onmouseout="this.style.borderColor='#e2e8f0'; this.style.backgroundColor='#f8fafc'">
+                            <span style="font-size: 22px;">🔧</span> 
+                            <div style="text-align: left;">
+                                <div style="font-size: 15px; font-weight: 700;">Aplikasi Teknisi</div>
+                                <div style="font-size: 11px; color: #64748b;">Input Redaman & Pemasangan Baru</div>
+                            </div>
+                        </a>
+
+                        <a href="https://script.google.com/macros/s/AKfycbyBSlarGZVY7wKsE9JVN3pyFjSfXYovX7BTNsio6gwHlswTe403Pc8Fxa-Gmmwcs7iBuw/exec" target="_blank" 
+                           style="background: #f8fafc; border: 2px solid #e2e8f0; padding: 12px 15px; border-radius: 12px; text-decoration: none; color: #0f172a; display: flex; align-items: center; gap: 15px; transition: 0.3s;"
+                           onmouseover="this.style.borderColor='#10b981'; this.style.backgroundColor='#ecfdf5'" 
+                           onmouseout="this.style.borderColor='#e2e8f0'; this.style.backgroundColor='#f8fafc'">
+                            <span style="font-size: 22px;">💰</span> 
+                            <div style="text-align: left;">
+                                <div style="font-size: 15px; font-weight: 700;">Sistem Keuangan</div>
+                                <div style="font-size: 11px; color: #64748b;">Manajemen Setoran & Laporan PDF</div>
+                            </div>
+                        </a>
+
+                        <a href="https://script.google.com/macros/s/AKfycbwdN5ajP9Fw_WpVuSSsoU5cyjDHqWMUN5fCSixJhZYb6ppEzYNSd3YDf7Cq7pw9eGE7Bg/exec" target="_blank" 
+                           style="background: #f8fafc; border: 2px solid #e2e8f0; padding: 12px 15px; border-radius: 12px; text-decoration: none; color: #0f172a; display: flex; align-items: center; gap: 15px; transition: 0.3s;"
+                           onmouseover="this.style.borderColor='#8b5cf6'; this.style.backgroundColor='#f5f3ff'" 
+                           onmouseout="this.style.borderColor='#e2e8f0'; this.style.backgroundColor='#f8fafc'">
+                            <span style="font-size: 22px;">👩🏻‍💻</span> 
+                            <div style="text-align: left;">
+                                <div style="font-size: 15px; font-weight: 700;">Kasir & Pembayaran</div>
+                                <div style="font-size: 11px; color: #64748b;">Database Infrastruktur Fiber Optic</div>
+                            </div>
+                        </a>
+
+                        <a href="MASUKKAN_LINK_4_DI_SINI" target="_blank" 
+                           style="background: #f8fafc; border: 2px solid #e2e8f0; padding: 12px 15px; border-radius: 12px; text-decoration: none; color: #0f172a; display: flex; align-items: center; gap: 15px; transition: 0.3s;"
+                           onmouseover="this.style.borderColor='#f59e0b'; this.style.backgroundColor='#fffbeb'" 
+                           onmouseout="this.style.borderColor='#e2e8f0'; this.style.backgroundColor='#f8fafc'">
+                            <span style="font-size: 22px;">👥</span> 
+                            <div style="text-align: left;">
+                                <div style="font-size: 15px; font-weight: 700;">Data Pelanggan</div>
+                                <div style="font-size: 11px; color: #64748b;">Pengaturan Isolir & Aktivasi</div>
+                            </div>
+                        </a>
+
+                        <a href="MASUKKAN_LINK_5_DI_SINI" target="_blank" 
+                           style="background: #f8fafc; border: 2px solid #e2e8f0; padding: 12px 15px; border-radius: 12px; text-decoration: none; color: #0f172a; display: flex; align-items: center; gap: 15px; transition: 0.3s;"
+                           onmouseover="this.style.borderColor='#06b6d4'; this.style.backgroundColor='#ecfeff'" 
+                           onmouseout="this.style.borderColor='#e2e8f0'; this.style.backgroundColor='#f8fafc'">
+                            <span style="font-size: 22px;">🤝</span> 
+                            <div style="text-align: left;">
+                                <div style="font-size: 15px; font-weight: 700;">Laporan Kemitraan</div>
+                                <div style="font-size: 11px; color: #64748b;">Rekapitulasi Bagi Hasil Desa</div>
+                            </div>
+                        </a>
+
+                    </div>
+                `,
+                showConfirmButton: false,
+                showCloseButton: true,
+                width: '450px',
+                padding: '2em',
+                color: '#0f172a',
+                background: '#fff',
+                backdrop: `rgba(15, 23, 42, 0.8)`
             });
         }
        // ==========================================
