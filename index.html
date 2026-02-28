@@ -16,8 +16,13 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        html { scroll-behavior: smooth; }
-        body { background-color: var(--light); color: var(--dark); overflow-x: hidden; }
+        html { 
+            scroll-behavior: smooth; 
+            scroll-padding-top: 190px;
+        body { 
+            background-color: var(--light); 
+            color: var(--dark); 
+        }
 
         /* Navbar Efek Kaca (Glassmorphism) */
         nav { 
@@ -58,7 +63,7 @@
         .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 35px -5px rgba(37, 99, 235, 0.5); }
 
         /* Section Global */
-        section { padding: 80px 5%; scroll-margin-top: 80px; }
+        section { padding: 80px 5%; }
         .section-header { text-align: center; margin-bottom: 60px; }
         .section-header h2 { font-size: 36px; font-weight: 800; margin-bottom: 15px; letter-spacing: -1px; }
         .section-header p { color: var(--gray); font-size: 16px; }
