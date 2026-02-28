@@ -3,64 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KAWAN NET - Internet Cepat Pekalongan</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>KAWAN NET | Internet Cepat Desa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-        :root { --primary: #0056b3; --secondary: #00a2ff; --dark: #1e293b; --light: #f8fafc; --white: #ffffff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background-color: var(--light); color: var(--dark); scroll-behavior: smooth; }
+        :root {
+            --primary: #2563eb; /* Biru Modern */
+            --secondary: #06b6d4; /* Cyan/Teal */
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gray: #64748b;
+        }
 
-        /* Navigation */
-        nav { background: var(--white); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-        .logo img { height: 40px; }
-        .logo span { font-weight: 700; font-size: 20px; color: var(--primary); }
-        .nav-links { display: flex; gap: 20px; }
-        .nav-links a { text-decoration: none; color: var(--dark); font-size: 14px; font-weight: 500; transition: 0.3s; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: var(--light); color: var(--dark); overflow-x: hidden; }
+
+        /* Navbar Efek Kaca (Glassmorphism) */
+        nav { 
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo img { height: 45px; }
+        .logo span { font-weight: 800; font-size: 22px; color: var(--dark); letter-spacing: -0.5px; }
+        
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { text-decoration: none; color: var(--gray); font-weight: 600; transition: 0.3s; font-size: 15px; }
         .nav-links a:hover { color: var(--primary); }
 
-        /* Hero Section */
+        /* Hero Section Modern */
         header { 
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); 
-            color: var(--white); padding: 80px 5% 100px; text-align: center; border-bottom-left-radius: 50px; border-bottom-right-radius: 50px;
+            padding: 160px 5% 100px; 
+            text-align: center; 
+            background: radial-gradient(circle at top, #e0f2fe 0%, var(--light) 70%);
         }
-        header h1 { font-size: 32px; margin-bottom: 15px; line-height: 1.2; }
-        header p { font-size: 16px; opacity: 0.9; margin-bottom: 30px; }
-        .btn-cta { background: var(--white); color: var(--primary); padding: 12px 30px; border-radius: 30px; text-decoration: none; font-weight: 700; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: 0.3s; }
-        .btn-cta:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
+        .badge { display: inline-block; padding: 8px 16px; background: #dbeafe; color: var(--primary); border-radius: 50px; font-weight: 700; font-size: 14px; margin-bottom: 20px; }
+        header h1 { font-size: 52px; font-weight: 800; line-height: 1.1; margin-bottom: 20px; letter-spacing: -1.5px; }
+        .text-gradient { 
+            background: linear-gradient(to right, var(--primary), var(--secondary)); 
+            -webkit-background-clip: text; color: transparent; 
+        }
+        header p { font-size: 18px; color: var(--gray); max-width: 600px; margin: 0 auto 40px; line-height: 1.6; }
+        
+        .btn-primary { 
+            background: linear-gradient(to right, var(--primary), var(--secondary)); 
+            color: white; padding: 16px 36px; border-radius: 50px; text-decoration: none; font-weight: 700; 
+            font-size: 16px; box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.4); transition: 0.3s; display: inline-block;
+        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 35px -5px rgba(37, 99, 235, 0.5); }
 
         /* Section Global */
-        section { padding: 60px 5%; }
-        .section-title { text-align: center; margin-bottom: 40px; }
-        .section-title h2 { font-size: 24px; color: var(--primary); }
-        .section-title div { width: 50px; height: 4px; background: var(--secondary); margin: 10px auto; border-radius: 2px; }
+        section { padding: 80px 5%; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-size: 36px; font-weight: 800; margin-bottom: 15px; letter-spacing: -1px; }
+        .section-header p { color: var(--gray); font-size: 16px; }
 
-        /* Pricing/Packages */
-        .grid-packages { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .card-pkg { background: var(--white); padding: 30px; border-radius: 20px; text-align: center; border: 1px solid #eee; transition: 0.3s; }
-        .card-pkg:hover { border-color: var(--secondary); transform: scale(1.02); }
-        .card-pkg h3 { font-size: 20px; margin-bottom: 10px; }
-        .card-pkg .price { font-size: 24px; font-weight: 700; color: var(--primary); margin-bottom: 20px; }
-        .card-pkg ul { list-style: none; margin-bottom: 25px; font-size: 13px; color: #666; }
-        .card-pkg ul li { margin-bottom: 8px; }
-        .btn-order { display: block; padding: 10px; background: var(--primary); color: var(--white); text-decoration: none; border-radius: 10px; font-size: 14px; font-weight: 600; }
+        /* Card Paket Melayang */
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1100px; margin: 0 auto; }
+        .card { 
+            background: white; border-radius: 24px; padding: 40px; position: relative;
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05); transition: all 0.4s ease; border: 1px solid #f1f5f9;
+        }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); border-color: #e2e8f0; }
+        .card.popular { border: 2px solid var(--primary); transform: scale(1.05); }
+        .card.popular:hover { transform: scale(1.05) translateY(-10px); }
+        .popular-badge { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; padding: 6px 20px; border-radius: 20px; font-size: 12px; font-weight: 700; box-shadow: 0 4px 10px rgba(37,99,235,0.3); }
+        
+        .card h3 { font-size: 22px; color: var(--dark); margin-bottom: 10px; }
+        .price { font-size: 42px; font-weight: 800; color: var(--dark); margin-bottom: 20px; }
+        .price span { font-size: 16px; color: var(--gray); font-weight: 500; }
+        .card ul { list-style: none; margin-bottom: 30px; }
+        .card ul li { padding: 10px 0; color: var(--gray); border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; gap: 10px; }
+        .card ul li::before { content: '✓'; color: var(--secondary); font-weight: bold; }
+        
+        .btn-outline { display: block; text-align: center; padding: 14px; border-radius: 12px; font-weight: 700; text-decoration: none; border: 2px solid #e2e8f0; color: var(--dark); transition: 0.3s; }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+        .card.popular .btn-outline { background: var(--primary); color: white; border-color: var(--primary); }
+        .card.popular .btn-outline:hover { background: #1d4ed8; }
 
-        /* Customer Portal Area */
-        .portal-box { background: var(--white); border-radius: 25px; padding: 40px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .search-input { width: 100%; max-width: 400px; padding: 15px; border: 2px solid #eee; border-radius: 15px; outline: none; font-size: 16px; margin-bottom: 15px; }
-        .search-input:focus { border-color: var(--secondary); }
+        /* Fitur Cek Tagihan Elegan */
+        .cek-box { 
+            max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 24px; 
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.08); text-align: center;
+        }
+        .input-group { display: flex; gap: 10px; margin-top: 20px; }
+        .input-group input { 
+            flex: 1; padding: 16px 20px; border-radius: 12px; border: 2px solid #e2e8f0; 
+            font-size: 16px; outline: none; transition: 0.3s; font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .input-group input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(37,99,235,0.1); }
+        .input-group button { 
+            background: var(--dark); color: white; border: none; padding: 0 30px; border-radius: 12px; 
+            font-weight: 700; cursor: pointer; transition: 0.3s; 
+        }
+        .input-group button:hover { background: var(--primary); }
 
         /* Footer */
-        footer { background: var(--dark); color: #94a3b8; padding: 40px 5% 20px; text-align: center; font-size: 12px; }
-        .footer-links { margin-bottom: 20px; }
-        .footer-links a { color: #cbd5e1; margin: 0 10px; text-decoration: none; }
-        .staff-link { margin-top: 30px; display: inline-block; opacity: 0.3; transition: 0.3s; color: white; text-decoration: none; }
-        .staff-link:hover { opacity: 1; }
+        footer { background: white; padding: 60px 5% 30px; border-top: 1px solid #e2e8f0; text-align: center; }
+        .footer-logo img { height: 40px; filter: grayscale(100%); opacity: 0.6; margin-bottom: 20px; transition: 0.3s; }
+        .footer-logo img:hover { filter: none; opacity: 1; }
+        .copyright { color: var(--gray); font-size: 14px; margin-bottom: 10px; }
+        .staff-link { color: #cbd5e1; font-size: 12px; text-decoration: none; transition: 0.3s; }
+        .staff-link:hover { color: var(--primary); }
 
         @media (max-width: 768px) {
-            header h1 { font-size: 26px; }
-            .nav-links { display: none; } /* Sederhanakan untuk mobile */
+            header h1 { font-size: 38px; }
+            .nav-links { display: none; }
+            .card.popular { transform: none; }
+            .card.popular:hover { transform: translateY(-10px); }
+            .input-group { flex-direction: column; }
+            .input-group button { padding: 16px; }
         }
     </style>
 </head>
@@ -72,139 +128,129 @@
             <span>KAWAN NET</span>
         </a>
         <div class="nav-links">
-            <a href="#paket">Paket</a>
-            <a href="#sebaran">Area</a>
-            <a href="#cek">Cek Tagihan</a>
+            <a href="#paket">Paket Internet</a>
+            <a href="#cek-tagihan">Layanan Pelanggan</a>
+            <a href="https://wa.me/6285602533346" target="_blank" style="color: var(--primary);">Hubungi Kami</a>
         </div>
     </nav>
 
     <header>
-        <h1>Internet Rakyat,<br>Kualitas Hebat!</h1>
-        <p>Solusi internet rumah stabil dan terjangkau di Pekalongan melalui jaringan Fiber Optic murni.</p>
-        <a href="https://wa.me/6285602533346" class="btn-cta">Daftar Sekarang</a>
+        <div class="badge">🚀 Bekerja sama dengan BUMDes</div>
+        <h1>Koneksi Tanpa Batas<br>Untuk <span class="text-gradient">Keluarga Anda</span></h1>
+        <p>Nikmati layanan internet Fiber Optic super cepat, stabil, dan terjangkau. Bebas FUP, streaming lancar, dan main game tanpa nge-lag di seluruh area jangkauan kami.</p>
+        <a href="#paket" class="btn-primary">Lihat Pilihan Paket</a>
     </header>
 
     <section id="paket">
-        <div class="section-title">
-            <h2>Pilihan Paket Internet</h2>
-            <div></div>
+        <div class="section-header">
+            <h2>Pilih Paket Sesuai Kebutuhan</h2>
+            <p>Harga jujur, transparan, tanpa biaya tersembunyi.</p>
         </div>
-        <div class="grid-packages">
-            <div class="card-pkg">
-                <h3>Hemat</h3>
-                <div class="price">5 Mbps</div>
+        
+        <div class="grid-cards">
+            <div class="card">
+                <h3>Paket Hemat</h3>
+                <div class="price">5 <span>Mbps</span></div>
                 <ul>
-                    <li>Cocok untuk 1-2 Perangkat</li>
+                    <li>Ideal untuk 1-3 Perangkat</li>
+                    <li>Browsing & Sosmed Lancar</li>
                     <li>Unlimited Tanpa FUP</li>
                     <li>Full Fiber Optic</li>
                 </ul>
-                <a href="#" class="btn-order">Pilih Paket</a>
+                <a href="https://wa.me/6285602533346?text=Halo%20Admin%20Kawan%20Net,%20saya%20mau%20pasang%20Paket%20Hemat%205Mbps" class="btn-outline">Pilih Paket Ini</a>
             </div>
-            <div class="card-pkg" style="border-color: var(--secondary);">
-                <h3>Populer</h3>
-                <div class="price">10 Mbps</div>
+
+            <div class="card popular">
+                <div class="popular-badge">Paling Laris 🔥</div>
+                <h3>Paket Keluarga</h3>
+                <div class="price">10 <span>Mbps</span></div>
                 <ul>
-                    <li>Cocok untuk 3-5 Perangkat</li>
-                    <li>Streaming & Sekolah Online</li>
+                    <li>Ideal untuk 4-7 Perangkat</li>
+                    <li>Streaming YouTube/Netflix HD</li>
+                    <li>Sekolah Online & Zoom Lancar</li>
                     <li>Unlimited Tanpa FUP</li>
                 </ul>
-                <a href="#" class="btn-order" style="background: var(--secondary);">Pilih Paket</a>
+                <a href="https://wa.me/6285602533346?text=Halo%20Admin%20Kawan%20Net,%20saya%20mau%20pasang%20Paket%20Keluarga%2010Mbps" class="btn-outline">Pilih Paket Ini</a>
             </div>
-            <div class="card-pkg">
-                <h3>Bisnis</h3>
-                <div class="price">20 Mbps</div>
+
+            <div class="card">
+                <h3>Paket Pro</h3>
+                <div class="price">20 <span>Mbps</span></div>
                 <ul>
-                    <li>Cocok untuk 5-10 Perangkat</li>
-                    <li>Game Online & Kantor</li>
-                    <li>Prioritas Layanan</li>
+                    <li>Ideal untuk >8 Perangkat</li>
+                    <li>Game Online Prioritas (Ping Stabil)</li>
+                    <li>Download/Upload Super Cepat</li>
+                    <li>Unlimited Tanpa FUP</li>
                 </ul>
-                <a href="#" class="btn-order">Pilih Paket</a>
+                <a href="https://wa.me/6285602533346?text=Halo%20Admin%20Kawan%20Net,%20saya%20mau%20pasang%20Paket%20Pro%2020Mbps" class="btn-outline">Pilih Paket Ini</a>
             </div>
         </div>
     </section>
 
-    <section id="cek" style="background: #f1f5f9;">
-        <div class="section-title">
-            <h2>Pusat Pelanggan Mandiri</h2>
-            <div></div>
-            <p style="font-size: 13px; color: #666;">Cek status tagihan dan masa aktif Anda di sini.</p>
+    <section id="cek-tagihan" style="background: var(--light);">
+        <div class="section-header">
+            <h2>Portal Pelanggan</h2>
+            <p>Cek status jaringan dan informasi layanan Anda secara mandiri.</p>
         </div>
-        <div class="portal-box">
-            <input type="text" id="idPelanggan" class="search-input" placeholder="Masukkan ID Pelanggan Anda...">
-            <br>
-            <button onclick="cekStatus()" class="btn-blue" style="background:var(--primary); color:white; border:none; padding:15px 40px; border-radius:15px; cursor:pointer; font-weight:bold;">Cek Status Sekarang</button>
+        
+        <div class="cek-box">
+            <h3 style="margin-bottom: 10px; font-size: 20px;">Cek Status & Info Tagihan</h3>
+            <p style="color: var(--gray); font-size: 14px;">Masukkan ID Pelanggan Anda (Contoh: KN2512-xxx)</p>
             
-            <div id="hasilCek" style="margin-top: 30px;"></div>
+            <div class="input-group">
+                <input type="text" id="idPelanggan" placeholder="Ketik ID Pelanggan di sini...">
+                <button onclick="cekStatus()">Cek Sekarang</button>
+            </div>
+            
+            <div id="hasilCek" style="margin-top: 30px; text-align: left;"></div>
         </div>
     </section>
 
     <footer>
-        <div class="footer-links">
-            <a href="#">Beranda</a> | <a href="#paket">Paket</a> | <a href="#sebaran">Jangkauan</a>
+        <div class="footer-logo">
+            <img src="https://lh3.googleusercontent.com/d/1v7aYOpLRpcM9iQM_mbmR2BQJXOm6iyij" alt="Kawan Net">
         </div>
-        <p>&copy; 2026 KAWAN NET Pekalongan. All Rights Reserved.</p>
-        <p>Bekerja sama dengan BUMDes Setempat</p>
-        
-        <a href="#" onclick="aksesInternal()" class="staff-link">🔒 Portal Internal</a>
+        <p class="copyright">© 2026 KAWAN NET Pekalongan. All Rights Reserved. <br>Bekerja sama dengan BUMDes.</p>
+        <a href="#" class="staff-link">🔒 Portal Staf Internal</a>
     </footer>
 
     <script>
         function cekStatus() {
-    const id = document.getElementById('idPelanggan').value.trim();
-    const hasilDiv = document.getElementById('hasilCek');
-    
-    // 💡 MASUKKAN LINK WEB APP GAS BAPAK DI SINI:
-    const urlAPI = "https://script.google.com/macros/s/AKfycbzuX60x0FznRreXKORnFGAFU_8dIC8Q9kNWS53X8ENyTthBTid7XlPy-hjqmKtY-Q0Vkw/exec"; 
+            const id = document.getElementById('idPelanggan').value.trim();
+            const hasilDiv = document.getElementById('hasilCek');
+            
+            // 💡 MASUKKAN LINK WEB APP GAS BAPAK DI SINI:
+            const urlAPI = "https://script.google.com/macros/s/AKfycbzuX60x0FznRreXKORnFGAFU_8dIC8Q9kNWS53X8ENyTthBTid7XlPy-hjqmKtY-Q0Vkw/exec"; 
 
-    if(!id) {
-        Swal.fire('Opps', 'Masukkan ID Pelanggan dulu ya!', 'warning');
-        return;
-    }
+            if(!id) {
+                Swal.fire('Oops', 'Mohon ketik ID Pelanggan Anda terlebih dahulu!', 'warning');
+                return;
+            }
 
-    hasilDiv.innerHTML = `<div style="padding:20px; background:#eef2ff; border-radius:15px; border:1px dashed #0056b3;">⏳ Sedang mengambil data untuk ID <b>${id}</b>...</div>`;
+            hasilDiv.innerHTML = `<div style="padding:20px; background:#f8fafc; border-radius:15px; text-align:center; color:var(--primary); font-weight:600;">⏳ Sedang mencari data ${id}...</div>`;
 
-    // Proses memanggil data dari Google Sheets
-    fetch(`${urlAPI}?id=${id}`)
-    .then(response => response.json())
-    .then(data => {
-        if(data.sukses) {
-            // Tampilan jika ID Ditemukan
-            hasilDiv.innerHTML = `
-                <div style="background: white; padding: 25px; border-radius: 20px; border: 2px solid #28a745; text-align: left; box-shadow: 0 10px 20px rgba(0,0,0,0.05);">
-                    <h3 style="color:#28a745; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">✅ Data Ditemukan</h3>
-                    <p style="margin-bottom:8px;"><b>Nama:</b> ${data.nama}</p>
-                    <p style="margin-bottom:8px;"><b>Paket:</b> ${data.paket}</p>
-                    <p style="margin-bottom:15px;"><b>Status:</b> <span style="padding:4px 10px; border-radius:5px; background:${data.status === 'Aktif' ? '#dcfce7' : '#fee2e2'}; color:${data.status === 'Aktif' ? '#166534' : '#991b1b'}; font-weight:bold;">${data.status}</span></p>
-                    <div style="background:#f8fafc; padding:10px; border-radius:10px; font-size:12px; color:#64748b;">
-                        *Jika ada kendala pembayaran, silakan hubungi Admin Kawan Net melalui WhatsApp.
-                    </div>
-                </div>`;
-            Swal.fire({ icon: 'success', title: 'Data Berhasil Dimuat', showConfirmButton: false, timer: 1500 });
-        } else {
-            // Tampilan jika ID TIDAK Ditemukan
-            hasilDiv.innerHTML = `<div style="padding:20px; background:#fee2e2; color:#991b1b; border-radius:15px; border:1px solid #f87171;">❌ ${data.pesan}</div>`;
-            Swal.fire('Tidak Ditemukan', 'Pastikan ID yang Anda masukkan sudah benar.', 'error');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        hasilDiv.innerHTML = `<div style="padding:20px; background:#fff7ed; color:#9a3412; border-radius:15px;">⚠️ Terjadi gangguan koneksi. Silakan coba lagi nanti.</div>`;
-    });
-}
-        function aksesInternal() {
-            Swal.fire({
-                title: 'Akses Terbatas',
-                text: 'Hanya untuk staf Kawan Net',
-                input: 'password',
-                inputPlaceholder: 'Masukkan PIN Staf',
-                showCancelButton: true
-            }).then((result) => {
-              if (result.value === '123456') { // PIN sementara, bisa Bapak ganti
-                  Swal.fire('Akses Diterima', 'Membuka Portal Staf...', 'success');
-                  // Arahkan ke link portal internal Bapak nanti
-              } else if (result.value) {
-                  Swal.fire('Gagal', 'PIN Salah!', 'error');
-              }
+            fetch(urlAPI + "?id=" + id)
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                if(data.sukses) {
+                    hasilDiv.innerHTML = `
+                        <div style="background: #f0fdf4; padding: 25px; border-radius: 16px; border: 1px solid #bbf7d0;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; padding-bottom:15px; border-bottom:1px solid #dcfce7;">
+                                <h4 style="color:#166534; font-size:18px;">✅ Data Ditemukan</h4>
+                                <span style="background:${data.status === 'Aktif' ? '#22c55e' : '#ef4444'}; color:white; padding:4px 12px; border-radius:50px; font-size:12px; font-weight:700;">${data.status}</span>
+                            </div>
+                            <p style="margin-bottom:8px; color:#1e293b;"><b>Nama:</b> ${data.nama}</p>
+                            <p style="margin-bottom:8px; color:#1e293b;"><b>Paket:</b> ${data.paket}</p>
+                        </div>`;
+                } else {
+                    hasilDiv.innerHTML = `<div style="padding:20px; background:#fef2f2; color:#b91c1c; border-radius:16px; border:1px solid #fecaca; text-align:center;">❌ ${data.pesan}</div>`;
+                }
+            })
+            .catch(error => {
+                hasilDiv.innerHTML = `<div style="padding:20px; background:#fff7ed; color:#c2410c; border-radius:16px; text-align:center;">⚠️ Terjadi gangguan koneksi ke server.</div>`;
             });
         }
     </script>
