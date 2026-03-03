@@ -7,38 +7,30 @@
     <meta name="title" content="KAWAN NET | Internet Cepat Area Pekalongan">
     <meta name="description" content="Layanan internet Fiber Optic super cepat, stabil, dan terjangkau. Bekerja sama dengan BUMDes untuk memajukan digitalisasi desa.">
 
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://kawannet5588-code.github.io/kawan.net/">
-    <meta property="og:title" content="KAWAN NET | Internet Cepat Area Pekalongan">
-    <meta property="og:description" content="Layanan internet Fiber Optic super cepat, stabil, dan terjangkau. Bekerja sama dengan BUMDes untuk memajukan digitalisasi desa. Cek jangkauan jaringan dan tagihan Anda secara mandiri di sini!">
-    <meta property="og:image" content="https://lh3.googleusercontent.com/d/1v7aYOpLRpcM9iQM_mbmR2BQJXOm6iyij">
-
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://kawannet5588-code.github.io/kawan.net/">
-    <meta property="twitter:title" content="KAWAN NET | Internet Cepat Area Pekalongan">
-    <meta property="twitter:description" content="Layanan internet Fiber Optic super cepat, stabil, dan terjangkau. Bebas FUP dan anti nge-lag!">
-    <meta property="twitter:image" content="https://lh3.googleusercontent.com/d/1v7aYOpLRpcM9iQM_mbmR2BQJXOm6iyij">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <style>
         :root {
-            --primary: #2563eb; /* Biru Modern */
-            --secondary: #06b6d4; /* Cyan/Teal */
+            --primary: #2563eb; 
+            --secondary: #06b6d4; 
             --dark: #0f172a;
             --light: #f8fafc;
             --gray: #64748b;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        
         html { 
             scroll-behavior: smooth; 
             scroll-padding-top: 190px;
+        } /* <-- Typo CSS yang membuat layout rentan sudah diperbaiki di sini */
+        
         body { 
             background-color: var(--light); 
             color: var(--dark); 
         }
 
-        /* Navbar Efek Kaca (Glassmorphism) */
         nav { 
             position: fixed; top: 0; width: 100%; z-index: 1000;
             background: rgba(255, 255, 255, 0.8);
@@ -55,7 +47,6 @@
         .nav-links a { text-decoration: none; color: var(--gray); font-weight: 600; transition: 0.3s; font-size: 15px; }
         .nav-links a:hover { color: var(--primary); }
 
-        /* Hero Section Modern */
         header { 
             padding: 160px 5% 100px; 
             text-align: center; 
@@ -76,13 +67,11 @@
         }
         .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 35px -5px rgba(37, 99, 235, 0.5); }
 
-        /* Section Global */
         section { padding: 80px 5%; }
         .section-header { text-align: center; margin-bottom: 60px; }
         .section-header h2 { font-size: 36px; font-weight: 800; margin-bottom: 15px; letter-spacing: -1px; }
         .section-header p { color: var(--gray); font-size: 16px; }
 
-        /* Card Paket Melayang */
         .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1100px; margin: 0 auto; }
         .card { 
             background: white; border-radius: 24px; padding: 40px; position: relative;
@@ -105,7 +94,6 @@
         .card.popular .btn-outline { background: var(--primary); color: white; border-color: var(--primary); }
         .card.popular .btn-outline:hover { background: #1d4ed8; }
 
-        /* Fitur Cek Tagihan Elegan */
         .cek-box { 
             max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 24px; 
             box-shadow: 0 20px 40px -10px rgba(0,0,0,0.08); text-align: center;
@@ -122,7 +110,6 @@
         }
         .input-group button:hover { background: var(--primary); }
 
-        /* Footer */
         footer { background: white; padding: 60px 5% 30px; border-top: 1px solid #e2e8f0; text-align: center; }
         .footer-logo img { height: 100px; filter: grayscale(100%); opacity: 0.6; margin-bottom: 20px; transition: 0.3s; }
         .footer-logo img:hover { filter: none; opacity: 1; }
@@ -138,16 +125,12 @@
             .input-group { flex-direction: column; }
             .input-group button { padding: 16px; }
         }
-            /* CSS Tambahan untuk Peta Modern */
-        
-        /* 1. Efek Titik Berdenyut (Pulse Animation) */
+            
         @keyframes pulse-modern {
             0% { transform: scale(1); opacity: 0.8; }
             50% { transform: scale(2); opacity: 0; }
             100% { transform: scale(1); opacity: 0; }
         }
-
-        /* 2. Gaya Popup Modern (Glassmorphism) */
         .leaflet-popup-content-wrapper {
             background: rgba(255, 255, 255, 0.7) !important;
             backdrop-filter: blur(10px);
@@ -160,8 +143,6 @@
         }
         .leaflet-popup-tip { background: rgba(255, 255, 255, 0.7) !important; backdrop-filter: blur(10px); }
         .leaflet-popup-close-button { color: #64748b !important; padding: 10px !important; }
-
-        /* 3. Gaya Judul Peta Gradasi */
         .modern-title {
             background: linear-gradient(to right, #2563eb, #06b6d4);
             -webkit-background-clip: text; color: transparent;
@@ -246,10 +227,10 @@
         
         <div class="cek-box">
             <h3 style="margin-bottom: 10px; font-size: 20px;">Cek Status & Info Tagihan</h3>
-            <p style="color: var(--gray); font-size: 14px;">Masukkan ID Pelanggan Anda (Contoh: KN2512-xxx)</p>
+            <p style="color: var(--gray); font-size: 14px;">Masukkan ID atau Nama Pelanggan</p>
             
             <div class="input-group">
-                <input type="text" id="idPelanggan" placeholder="Ketik ID Pelanggan di sini...">
+                <input type="text" id="idPelanggan" placeholder="Ketik ID atau Nama Pelanggan...">
                 <button onclick="cekStatus()">Cek Sekarang</button>
             </div>
             
@@ -266,10 +247,10 @@
                     <span style="font-size: 20px;">🎧</span> Buat Laporan Gangguan
                 </a>
             </div>
-            </div>
-        
+        </div>
     </section>
-<section id="peta-jaringan" style="background: white;">
+
+    <section id="peta-jaringan" style="background: white;">
         <div class="section-header">
             <h2>Jangkauan Kawan Net</h2>
             <p>Peta sebaran pelanggan aktif kami di wilayah Pekalongan dan sekitarnya.</p>
@@ -279,6 +260,7 @@
             <div id="map" style="height: 500px; border-radius: 16px; z-index: 1;"></div>
         </div>
     </section>
+
     <footer>
         <div class="footer-logo">
             <img src="https://lh3.googleusercontent.com/d/1v7aYOpLRpcM9iQM_mbmR2BQJXOm6iyij" alt="Kawan Net">
@@ -288,26 +270,20 @@
     </footer>
 
    <script>
-       const urlAPI = "https://script.google.com/macros/s/AKfycbzuX60x0FznRreXKORnFGAFU_8dIC8Q9kNWS53X8ENyTthBTid7XlPy-hjqmKtY-Q0Vkw/exec"; 
-       document.querySelectorAll('.nav-links a[href^="#"], .btn-primary[href^="#"]').forEach(anchor => {
+        const urlAPI = "https://script.google.com/macros/s/AKfycbzuX60x0FznRreXKORnFGAFU_8dIC8Q9kNWS53X8ENyTthBTid7XlPy-hjqmKtY-Q0Vkw/exec"; 
+        
+        document.querySelectorAll('.nav-links a[href^="#"], .btn-primary[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
-                e.preventDefault(); // Mencegah browser melompat kasar
-                
+                e.preventDefault(); 
                 const targetId = this.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
-                
                 if (targetElement) {
-                    // Jarak pengereman disetel 190px agar pas dengan logo besar Kawan Net
                     const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - 190;
-                    
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth' // Memaksa guliran menjadi super halus
-                    });
+                    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
                 }
             });
         });
-        // Fungsi untuk format angka jadi Rupiah (Rp 50.000)
+
         function formatRupiah(angka) {
             let numberString = angka.toString().replace(/[^,\d]/g, '');
             if(!numberString) return angka; 
@@ -315,11 +291,11 @@
         }
 
         function cekStatus() {
-            const id = document.getElementById('idPelanggan').value.trim();
+            const keyword = document.getElementById('idPelanggan').value.trim();
             const hasilDiv = document.getElementById('hasilCek');
 
-            if(!id) {
-                Swal.fire({ icon: 'warning', title: 'Oops...', text: 'Mohon ketik ID Pelanggan Anda terlebih dahulu!', confirmButtonColor: '#2563eb', borderRadius: '20px' });
+            if(!keyword) {
+                Swal.fire({ icon: 'warning', title: 'Oops...', text: 'Mohon ketik ID atau Nama Pelanggan Anda!', confirmButtonColor: '#2563eb', borderRadius: '20px' });
                 return;
             }
 
@@ -330,7 +306,7 @@
                     <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
                 </div>`;
 
-            fetch(urlAPI + "?id=" + id)
+            fetch(urlAPI + "?id=" + encodeURIComponent(keyword))
             .then(response => response.json())
             .then(data => {
                 if(data.sukses) {
@@ -338,9 +314,29 @@
                     const colorMain = isAktif ? '#10b981' : '#ef4444';
                     const colorBg = isAktif ? '#ecfdf5' : '#fef2f2';
                     const colorText = isAktif ? '#065f46' : '#991b1b';
-                    
-                    // Terapkan format Rupiah ke harga paket
                     const hargaPaket = formatRupiah(data.paket);
+
+                    let statusBayarTeks = data.statusBayar || "Belum Lunas";
+                    let isLunas = statusBayarTeks.toLowerCase() === "lunas";
+                    let warnaTagihan = isLunas ? "#10b981" : "#ef4444";
+                    let bgTagihan = isLunas ? "#ecfdf5" : "#fef2f2";
+                    let borderTagihan = isLunas ? "#a7f3d0" : "#fecaca";
+                    
+                    let nominalTunggakan = parseInt(data.tunggakan) || 0;
+                    let infoTunggakan = "";
+                    
+                    if (nominalTunggakan > 0) {
+                        infoTunggakan = `
+                            <div style="margin-top: 12px; padding-top: 12px; border-top: 1px dashed #fecaca; display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: 12px; color: #991b1b; font-weight: 600;">⚠️ Total Tunggakan (Bulan Lalu)</span>
+                                <span style="font-size: 15px; font-weight: 800; color: #ef4444;">${formatRupiah(nominalTunggakan)}</span>
+                            </div>`;
+                    } else {
+                        infoTunggakan = `
+                            <div style="margin-top: 12px; padding-top: 12px; border-top: 1px dashed #a7f3d0; font-size: 12px; color: #065f46; text-align: center; font-weight: 600;">
+                                ✨ Hebat! Tidak ada tunggakan tagihan sebelumnya.
+                            </div>`;
+                    }
 
                     hasilDiv.innerHTML = `
                         <div style="background: white; padding: 35px; border-radius: 24px; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); border: 1px solid #f1f5f9; text-align: left; position: relative; overflow: hidden; transform: translateY(-5px); transition: 0.3s;">
@@ -349,7 +345,7 @@
                             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed #f1f5f9; padding-bottom: 20px; margin-bottom: 25px;">
                                 <div>
                                     <p style="font-size: 12px; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">ID Pelanggan</p>
-                                    <h4 style="font-size: 22px; color: #0f172a; font-weight: 800;">${data.id || id}</h4>
+                                    <h4 style="font-size: 22px; color: #0f172a; font-weight: 800;">${data.id || keyword}</h4>
                                 </div>
                                 <div style="background: ${colorBg}; color: ${colorText}; padding: 8px 18px; border-radius: 50px; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 8px;">
                                     <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:${colorMain}; box-shadow: 0 0 8px ${colorMain};"></span>
@@ -370,43 +366,39 @@
                                     <p style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Alamat Pemasangan</p>
                                     <p style="font-size: 14px; color: #334155; font-weight: 600;">${data.alamat}</p>
                                 </div>
-                                <div>
-                                    <p style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Titik ODP</p>
-                                    <p style="font-size: 14px; color: #334155; font-weight: 600;">📍 ${data.odp}</p>
+                            </div>
+
+                            <div style="background: ${bgTagihan}; border: 1px solid ${borderTagihan}; padding: 18px; border-radius: 16px; margin-bottom: 20px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-size: 13px; color: ${isLunas ? '#065f46' : '#991b1b'}; font-weight: 700;">Status Tagihan Bulan Ini</span>
+                                    <span style="background: ${isLunas ? '#10b981' : '#ef4444'}; color: white; padding: 4px 12px; border-radius: 8px; font-size: 12px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase;">
+                                        ${statusBayarTeks}
+                                    </span>
                                 </div>
-                                <div>
-                                    <p style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Terdaftar Sejak</p>
-                                    <p style="font-size: 14px; color: #334155; font-weight: 600;">📅 ${data.tanggal}</p>
-                                </div>
+                                ${infoTunggakan}
                             </div>
                             
-                            <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #f1f5f9; display: flex; align-items: center; gap: 10px;">
+                            <div style="padding-top: 15px; border-top: 1px solid #f1f5f9; display: flex; align-items: center; gap: 10px;">
                                 <span style="font-size: 20px;">📞</span>
                                 <p style="font-size: 13px; color: #64748b;">Butuh bantuan layanan? <a href="https://wa.me/6285602533346" style="color: #2563eb; font-weight: 700; text-decoration: none;">Hubungi Admin</a></p>
                             </div>
                         </div>`;
                 } else {
-                    hasilDiv.innerHTML = `<div style="padding: 30px; background: white; border-radius: 24px; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.05); border: 1px solid #fef2f2; text-align: center;"><div style="display:inline-flex; align-items:center; justify-content:center; width:60px; height:60px; background:#fef2f2; border-radius:50%; margin-bottom:15px;"><span style="font-size: 24px;">❌</span></div><h4 style="color:#0f172a; font-size:18px; font-weight:700; margin-bottom:10px;">Data Tidak Ditemukan</h4><p style="color:#64748b; font-size:14px;">${data.pesan}</p></div>`;
+                    hasilDiv.innerHTML = `<div style="padding: 30px; background: white; border-radius: 24px; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.05); border: 1px solid #fef2f2; text-align: center;"><div style="display:inline-flex; align-items:center; justify-content:center; width:60px; height:60px; background:#fef2f2; border-radius:50%; margin-bottom:15px;"><span style="font-size: 24px;">❌</span></div><h4 style="color:#0f172a; font-size:18px; font-weight:700; margin-bottom:10px;">Data Tidak Ditemukan</h4><p style="color:#64748b; font-size:14px;">Pastikan Nama atau ID yang dimasukkan sudah benar.</p></div>`;
                 }
             })
             .catch(error => {
                 hasilDiv.innerHTML = `<div style="padding:20px; background:white; color:#c2410c; border-radius:16px; border:1px solid #ffedd5; text-align:center;">⚠️ Terjadi gangguan koneksi ke server.</div>`;
             });
-        }// ==========================================
-        // FUNGSI PINTU RAHASIA (PORTAL STAF - 5 LINK)
-        // ==========================================
+        }
+
         function bukaPortalStaf(event) {
             event.preventDefault(); 
-            
             Swal.fire({
                 title: '<strong>Portal Internal <span style="color:#2563eb">Kawan Net</span></strong>',
                 html: `
-                    <p style="font-size: 14px; color: #64748b; margin-bottom: 15px;">
-                        Silakan pilih sistem operasional:
-                    </p>
-                    
+                    <p style="font-size: 14px; color: #64748b; margin-bottom: 15px;">Silakan pilih sistem operasional:</p>
                     <div style="display: flex; flex-direction: column; gap: 10px; max-height: 350px; overflow-y: auto; padding-right: 5px;">
-                        
                         <a href="https://script.google.com/macros/s/AKfycbyoHhDAE2Vmhu53avLrW2mXeXS-Z9ivIXzCZpk8neYG3XexrbXL4td3hFzqdWlLd1vZZg/exec" target="_blank" 
                            style="background: #f8fafc; border: 2px solid #e2e8f0; padding: 12px 15px; border-radius: 12px; text-decoration: none; color: #0f172a; display: flex; align-items: center; gap: 15px; transition: 0.3s;"
                            onmouseover="this.style.borderColor='#2563eb'; this.style.backgroundColor='#eff6ff'" 
@@ -417,7 +409,6 @@
                                 <div style="font-size: 11px; color: #64748b;">Input Redaman & Pemasangan Baru</div>
                             </div>
                         </a>
-
                         <a href="https://script.google.com/macros/s/AKfycbyBSlarGZVY7wKsE9JVN3pyFjSfXYovX7BTNsio6gwHlswTe403Pc8Fxa-Gmmwcs7iBuw/exec" target="_blank" 
                            style="background: #f8fafc; border: 2px solid #e2e8f0; padding: 12px 15px; border-radius: 12px; text-decoration: none; color: #0f172a; display: flex; align-items: center; gap: 15px; transition: 0.3s;"
                            onmouseover="this.style.borderColor='#10b981'; this.style.backgroundColor='#ecfdf5'" 
@@ -428,7 +419,6 @@
                                 <div style="font-size: 11px; color: #64748b;">Manajemen Setoran & Laporan PDF</div>
                             </div>
                         </a>
-
                         <a href="https://script.google.com/macros/s/AKfycbwdN5ajP9Fw_WpVuSSsoU5cyjDHqWMUN5fCSixJhZYb6ppEzYNSd3YDf7Cq7pw9eGE7Bg/exec" target="_blank" 
                            style="background: #f8fafc; border: 2px solid #e2e8f0; padding: 12px 15px; border-radius: 12px; text-decoration: none; color: #0f172a; display: flex; align-items: center; gap: 15px; transition: 0.3s;"
                            onmouseover="this.style.borderColor='#8b5cf6'; this.style.backgroundColor='#f5f3ff'" 
@@ -439,92 +429,40 @@
                                 <div style="font-size: 11px; color: #64748b;">Database Infrastruktur Fiber Optic</div>
                             </div>
                         </a>
-
-                        <a href="MASUKKAN_LINK_4_DI_SINI" target="_blank" 
-                           style="background: #f8fafc; border: 2px solid #e2e8f0; padding: 12px 15px; border-radius: 12px; text-decoration: none; color: #0f172a; display: flex; align-items: center; gap: 15px; transition: 0.3s;"
-                           onmouseover="this.style.borderColor='#f59e0b'; this.style.backgroundColor='#fffbeb'" 
-                           onmouseout="this.style.borderColor='#e2e8f0'; this.style.backgroundColor='#f8fafc'">
-                            <span style="font-size: 22px;">👥</span> 
-                            <div style="text-align: left;">
-                                <div style="font-size: 15px; font-weight: 700;">Data Pelanggan</div>
-                                <div style="font-size: 11px; color: #64748b;">Pengaturan Isolir & Aktivasi</div>
-                            </div>
-                        </a>
-
-                        <a href="MASUKKAN_LINK_5_DI_SINI" target="_blank" 
-                           style="background: #f8fafc; border: 2px solid #e2e8f0; padding: 12px 15px; border-radius: 12px; text-decoration: none; color: #0f172a; display: flex; align-items: center; gap: 15px; transition: 0.3s;"
-                           onmouseover="this.style.borderColor='#06b6d4'; this.style.backgroundColor='#ecfeff'" 
-                           onmouseout="this.style.borderColor='#e2e8f0'; this.style.backgroundColor='#f8fafc'">
-                            <span style="font-size: 22px;">🤝</span> 
-                            <div style="text-align: left;">
-                                <div style="font-size: 15px; font-weight: 700;">Laporan Kemitraan</div>
-                                <div style="font-size: 11px; color: #64748b;">Rekapitulasi Bagi Hasil Desa</div>
-                            </div>
-                        </a>
-
                     </div>
                 `,
-                showConfirmButton: false,
-                showCloseButton: true,
-                width: '450px',
-                padding: '2em',
-                color: '#0f172a',
-                background: '#fff',
-                backdrop: `rgba(15, 23, 42, 0.8)`
+                showConfirmButton: false, showCloseButton: true, width: '450px', padding: '2em', color: '#0f172a', background: '#fff', backdrop: `rgba(15, 23, 42, 0.8)`
             });
         }
-       // ==========================================
-        // KODE PENGGERAK PETA MODERN KAWAN NET
-        // ==========================================
-        
-        // 1. Inisialisasi Peta (Titik tengah Pekalongan)
+
         const map = L.map('map', {
-            zoomControl: false, // Matikan tombol zoom standar
-            attributionControl: false // Matikan tulisan Leaflet standar
+            zoomControl: false,
+            attributionControl: false
         }).setView([-6.8898, 109.6745], 13); 
 
-        // 2. Pasang Peta Dasar Modern (CartoDB Voyager - Terang & Bersih)
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
-            maxZoom: 20
-        }).addTo(map);
-
-        // Pasang Label Jalan (Opsional, agar tetap terbaca)
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', { maxZoom: 20 }).addTo(map);
         L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png').addTo(map);
-
-        // Tambahkan tombol zoom di pojok kanan bawah agar lebih rapi
         L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-        // 3. Memanggil Titik Jaringan dari Server
         fetch(urlAPI + "?aksi=peta")
             .then(res => res.json())
             .then(data => {
                 data.forEach(p => {
                     if(p.lat && p.lng) {
                         const isAktif = (p.status === 'Aktif');
+                        const warnaUtama = isAktif ? '#2563eb' : '#ef4444'; 
+                        const warnaCyan  = isAktif ? '#06b6d4' : '#f97316'; 
                         
-                        // Set Warna Gradasi (Aktif = Blue/Cyan, Lainnya = Merah/Orange)
-                        const warnaUtama = isAktif ? '#2563eb' : '#ef4444'; // Biru atau Merah
-                        const warnaCyan  = isAktif ? '#06b6d4' : '#f97316'; // Cyan atau Orange
-                        
-                        // Gabungan Denyut dan Titik Utama dalam Satu Container
                         const modernMarkerHtml = `
                             <div style="position:relative; width:18px; height:18px; display:flex; align-items:center; justify-content:center;">
                                 <div style="position:absolute; width:100%; height:100%; border-radius:50%; background:${warnaUtama}; animation:pulse-modern 2s infinite;"></div>
                                 <div style="position:relative; width:10px; height:10px; border-radius:50%; background:linear-gradient(135deg, ${warnaUtama}, ${warnaCyan}); border:2px solid white; box-shadow:0 0 10px rgba(37,99,235,0.4);"></div>
-                            </div>
-                        `;
+                            </div>`;
 
-                        // Tampilkan Titik di Peta menggunakan DivIcon
                         L.marker([p.lat, p.lng], {
-                            icon: L.divIcon({
-                                className: 'modern-marker',
-                                html: modernMarkerHtml,
-                                iconSize: [18, 18],
-                                iconAnchor: [9, 9]
-                            })
+                            icon: L.divIcon({ className: 'modern-marker', html: modernMarkerHtml, iconSize: [18, 18], iconAnchor: [9, 9] })
                         })
                         .addTo(map)
-                        // Popup Kaca yang sudah didesain di CSS atas
                         .bindPopup(`
                             <div style="min-width:200px; padding: 10px 0;">
                                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid rgba(0,0,0,0.05);">
