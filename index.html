@@ -249,7 +249,7 @@
             <p style="color: var(--gray); font-size: 14px;">Masukkan ID Pelanggan Anda (Contoh: KN2512-xxx)</p>
             
             <div class="input-group">
-                <input type="text" id="idPelanggan" placeholder="Ketik ID Pelanggan di sini...">
+                <input type="text" id="idPelanggan" placeholder="Ketik ID atau Nama Pelanggan...">
                 <button onclick="cekStatus()">Cek Sekarang</button>
             </div>
             
@@ -315,11 +315,12 @@
         }
 
         function cekStatus() {
-            const id = document.getElementById('idPelanggan').value.trim();
+            // Sekarang mengambil keyword (bisa ID, bisa Nama)
+            const keyword = document.getElementById('idPelanggan').value.trim();
             const hasilDiv = document.getElementById('hasilCek');
 
-            if(!id) {
-                Swal.fire({ icon: 'warning', title: 'Oops...', text: 'Mohon ketik ID Pelanggan Anda terlebih dahulu!', confirmButtonColor: '#2563eb', borderRadius: '20px' });
+            if(!keyword) {
+                Swal.fire({ icon: 'warning', title: 'Oops...', text: 'Mohon ketik ID atau Nama Pelanggan Anda!', confirmButtonColor: '#2563eb', borderRadius: '20px' });
                 return;
             }
 
@@ -330,7 +331,8 @@
                     <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
                 </div>`;
 
-            fetch(urlAPI + "?id=" + id)
+            // Mengirim keyword pencarian ke API
+            fetch(urlAPI + "?id=" + encodeURIComponent(keyword))
             .then(response => response.json())
             .then(data => {
                 if(data.sukses) {
@@ -339,8 +341,32 @@
                     const colorBg = isAktif ? '#ecfdf5' : '#fef2f2';
                     const colorText = isAktif ? '#065f46' : '#991b1b';
                     
-                    // Terapkan format Rupiah ke harga paket
                     const hargaPaket = formatRupiah(data.paket);
+
+                    // --- LOGIK STATUS BAYAR & TUNGGAKAN ---
+                    // Mengambil data statusBayar dan tunggakan dari backend (API)
+                    let statusBayarTeks = data.statusBayar || "Belum Lunas";
+                    let isLunas = statusBayarTeks.toLowerCase() === "lunas";
+                    let warnaTagihan = isLunas ? "#10b981" : "#ef4444";
+                    let bgTagihan = isLunas ? "#ecfdf5" : "#fef2f2";
+                    let borderTagihan = isLunas ? "#a7f3d0" : "#fecaca";
+                    
+                    let nominalTunggakan = parseInt(data.tunggakan) || 0;
+                    let infoTunggakan = "";
+                    
+                    if (nominalTunggakan > 0) {
+                        infoTunggakan = `
+                            <div style="margin-top: 12px; padding-top: 12px; border-top: 1px dashed #fecaca; display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: 12px; color: #991b1b; font-weight: 600;">⚠️ Total Tunggakan (Bulan Lalu)</span>
+                                <span style="font-size: 15px; font-weight: 800; color: #ef4444;">${formatRupiah(nominalTunggakan)}</span>
+                            </div>`;
+                    } else {
+                        infoTunggakan = `
+                            <div style="margin-top: 12px; padding-top: 12px; border-top: 1px dashed #a7f3d0; font-size: 12px; color: #065f46; text-align: center; font-weight: 600;">
+                                ✨ Hebat! Tidak ada tunggakan tagihan sebelumnya.
+                            </div>`;
+                    }
+                    // --------------------------------------
 
                     hasilDiv.innerHTML = `
                         <div style="background: white; padding: 35px; border-radius: 24px; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); border: 1px solid #f1f5f9; text-align: left; position: relative; overflow: hidden; transform: translateY(-5px); transition: 0.3s;">
@@ -349,7 +375,7 @@
                             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed #f1f5f9; padding-bottom: 20px; margin-bottom: 25px;">
                                 <div>
                                     <p style="font-size: 12px; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">ID Pelanggan</p>
-                                    <h4 style="font-size: 22px; color: #0f172a; font-weight: 800;">${data.id || id}</h4>
+                                    <h4 style="font-size: 22px; color: #0f172a; font-weight: 800;">${data.id || keyword}</h4>
                                 </div>
                                 <div style="background: ${colorBg}; color: ${colorText}; padding: 8px 18px; border-radius: 50px; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 8px;">
                                     <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:${colorMain}; box-shadow: 0 0 8px ${colorMain};"></span>
@@ -370,28 +396,31 @@
                                     <p style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Alamat Pemasangan</p>
                                     <p style="font-size: 14px; color: #334155; font-weight: 600;">${data.alamat}</p>
                                 </div>
-                                <div>
-                                    <p style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Titik ODP</p>
-                                    <p style="font-size: 14px; color: #334155; font-weight: 600;">📍 ${data.odp}</p>
+                            </div>
+
+                            <div style="background: ${bgTagihan}; border: 1px solid ${borderTagihan}; padding: 18px; border-radius: 16px; margin-bottom: 20px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-size: 13px; color: ${isLunas ? '#065f46' : '#991b1b'}; font-weight: 700;">Status Tagihan Bulan Ini</span>
+                                    <span style="background: ${isLunas ? '#10b981' : '#ef4444'}; color: white; padding: 4px 12px; border-radius: 8px; font-size: 12px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase;">
+                                        ${statusBayarTeks}
+                                    </span>
                                 </div>
-                                <div>
-                                    <p style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Terdaftar Sejak</p>
-                                    <p style="font-size: 14px; color: #334155; font-weight: 600;">📅 ${data.tanggal}</p>
-                                </div>
+                                ${infoTunggakan}
                             </div>
                             
-                            <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #f1f5f9; display: flex; align-items: center; gap: 10px;">
+                            <div style="padding-top: 15px; border-top: 1px solid #f1f5f9; display: flex; align-items: center; gap: 10px;">
                                 <span style="font-size: 20px;">📞</span>
                                 <p style="font-size: 13px; color: #64748b;">Butuh bantuan layanan? <a href="https://wa.me/6285602533346" style="color: #2563eb; font-weight: 700; text-decoration: none;">Hubungi Admin</a></p>
                             </div>
                         </div>`;
                 } else {
-                    hasilDiv.innerHTML = `<div style="padding: 30px; background: white; border-radius: 24px; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.05); border: 1px solid #fef2f2; text-align: center;"><div style="display:inline-flex; align-items:center; justify-content:center; width:60px; height:60px; background:#fef2f2; border-radius:50%; margin-bottom:15px;"><span style="font-size: 24px;">❌</span></div><h4 style="color:#0f172a; font-size:18px; font-weight:700; margin-bottom:10px;">Data Tidak Ditemukan</h4><p style="color:#64748b; font-size:14px;">${data.pesan}</p></div>`;
+                    hasilDiv.innerHTML = `<div style="padding: 30px; background: white; border-radius: 24px; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.05); border: 1px solid #fef2f2; text-align: center;"><div style="display:inline-flex; align-items:center; justify-content:center; width:60px; height:60px; background:#fef2f2; border-radius:50%; margin-bottom:15px;"><span style="font-size: 24px;">❌</span></div><h4 style="color:#0f172a; font-size:18px; font-weight:700; margin-bottom:10px;">Data Tidak Ditemukan</h4><p style="color:#64748b; font-size:14px;">Pastikan Nama atau ID yang dimasukkan sudah benar.</p></div>`;
                 }
             })
             .catch(error => {
                 hasilDiv.innerHTML = `<div style="padding:20px; background:white; color:#c2410c; border-radius:16px; border:1px solid #ffedd5; text-align:center;">⚠️ Terjadi gangguan koneksi ke server.</div>`;
             });
+        }
         }// ==========================================
         // FUNGSI PINTU RAHASIA (PORTAL STAF - 5 LINK)
         // ==========================================
