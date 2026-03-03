@@ -288,34 +288,36 @@
     </footer>
 
    <script>
-       const urlAPI = "https://script.google.com/macros/s/AKfycbzuX60x0FznRreXKORnFGAFU_8dIC8Q9kNWS53X8ENyTthBTid7XlPy-hjqmKtY-Q0Vkw/exec"; 
-       document.querySelectorAll('.nav-links a[href^="#"], .btn-primary[href^="#"]').forEach(anchor => {
+        const urlAPI = "https://script.google.com/macros/s/AKfycbzuX60x0FznRreXKORnFGAFU_8dIC8Q9kNWS53X8ENyTthBTid7XlPy-hjqmKtY-Q0Vkw/exec"; 
+        
+        // ==========================================
+        // 1. SMOOTH SCROLL NAVIGASI
+        // ==========================================
+        document.querySelectorAll('.nav-links a[href^="#"], .btn-primary[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
-                e.preventDefault(); // Mencegah browser melompat kasar
-                
+                e.preventDefault(); 
                 const targetId = this.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
-                
                 if (targetElement) {
-                    // Jarak pengereman disetel 190px agar pas dengan logo besar Kawan Net
                     const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - 190;
-                    
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth' // Memaksa guliran menjadi super halus
-                    });
+                    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
                 }
             });
         });
-        // Fungsi untuk format angka jadi Rupiah (Rp 50.000)
+
+        // ==========================================
+        // 2. FORMAT RUPIAH
+        // ==========================================
         function formatRupiah(angka) {
             let numberString = angka.toString().replace(/[^,\d]/g, '');
             if(!numberString) return angka; 
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(numberString);
         }
 
+        // ==========================================
+        // 3. FUNGSI CEK STATUS & TUNGGAKAN
+        // ==========================================
         function cekStatus() {
-            // Sekarang mengambil keyword (bisa ID, bisa Nama)
             const keyword = document.getElementById('idPelanggan').value.trim();
             const hasilDiv = document.getElementById('hasilCek');
 
@@ -324,6 +326,7 @@
                 return;
             }
 
+            // Tampilkan animasi loading
             hasilDiv.innerHTML = `
                 <div style="padding:40px; background:white; border-radius:24px; text-align:center; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.05); border: 1px solid #f1f5f9;">
                     <div style="display:inline-block; width:40px; height:40px; border:4px solid #e2e8f0; border-top-color:#2563eb; border-radius:50%; animation:spin 1s linear infinite;"></div>
@@ -331,7 +334,7 @@
                     <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
                 </div>`;
 
-            // Mengirim keyword pencarian ke API
+            // Kirim permintaan ke server
             fetch(urlAPI + "?id=" + encodeURIComponent(keyword))
             .then(response => response.json())
             .then(data => {
@@ -343,8 +346,6 @@
                     
                     const hargaPaket = formatRupiah(data.paket);
 
-                    // --- LOGIK STATUS BAYAR & TUNGGAKAN ---
-                    // Mengambil data statusBayar dan tunggakan dari backend (API)
                     let statusBayarTeks = data.statusBayar || "Belum Lunas";
                     let isLunas = statusBayarTeks.toLowerCase() === "lunas";
                     let warnaTagihan = isLunas ? "#10b981" : "#ef4444";
@@ -366,7 +367,6 @@
                                 ✨ Hebat! Tidak ada tunggakan tagihan sebelumnya.
                             </div>`;
                     }
-                    // --------------------------------------
 
                     hasilDiv.innerHTML = `
                         <div style="background: white; padding: 35px; border-radius: 24px; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); border: 1px solid #f1f5f9; text-align: left; position: relative; overflow: hidden; transform: translateY(-5px); transition: 0.3s;">
@@ -421,19 +421,16 @@
                 hasilDiv.innerHTML = `<div style="padding:20px; background:white; color:#c2410c; border-radius:16px; border:1px solid #ffedd5; text-align:center;">⚠️ Terjadi gangguan koneksi ke server.</div>`;
             });
         }
-        }// ==========================================
-        // FUNGSI PINTU RAHASIA (PORTAL STAF - 5 LINK)
+
+        // ==========================================
+        // 4. PORTAL STAF
         // ==========================================
         function bukaPortalStaf(event) {
             event.preventDefault(); 
-            
             Swal.fire({
                 title: '<strong>Portal Internal <span style="color:#2563eb">Kawan Net</span></strong>',
                 html: `
-                    <p style="font-size: 14px; color: #64748b; margin-bottom: 15px;">
-                        Silakan pilih sistem operasional:
-                    </p>
-                    
+                    <p style="font-size: 14px; color: #64748b; margin-bottom: 15px;">Silakan pilih sistem operasional:</p>
                     <div style="display: flex; flex-direction: column; gap: 10px; max-height: 350px; overflow-y: auto; padding-right: 5px;">
                         
                         <a href="https://script.google.com/macros/s/AKfycbyoHhDAE2Vmhu53avLrW2mXeXS-Z9ivIXzCZpk8neYG3XexrbXL4td3hFzqdWlLd1vZZg/exec" target="_blank" 
@@ -469,91 +466,43 @@
                             </div>
                         </a>
 
-                        <a href="MASUKKAN_LINK_4_DI_SINI" target="_blank" 
-                           style="background: #f8fafc; border: 2px solid #e2e8f0; padding: 12px 15px; border-radius: 12px; text-decoration: none; color: #0f172a; display: flex; align-items: center; gap: 15px; transition: 0.3s;"
-                           onmouseover="this.style.borderColor='#f59e0b'; this.style.backgroundColor='#fffbeb'" 
-                           onmouseout="this.style.borderColor='#e2e8f0'; this.style.backgroundColor='#f8fafc'">
-                            <span style="font-size: 22px;">👥</span> 
-                            <div style="text-align: left;">
-                                <div style="font-size: 15px; font-weight: 700;">Data Pelanggan</div>
-                                <div style="font-size: 11px; color: #64748b;">Pengaturan Isolir & Aktivasi</div>
-                            </div>
-                        </a>
-
-                        <a href="MASUKKAN_LINK_5_DI_SINI" target="_blank" 
-                           style="background: #f8fafc; border: 2px solid #e2e8f0; padding: 12px 15px; border-radius: 12px; text-decoration: none; color: #0f172a; display: flex; align-items: center; gap: 15px; transition: 0.3s;"
-                           onmouseover="this.style.borderColor='#06b6d4'; this.style.backgroundColor='#ecfeff'" 
-                           onmouseout="this.style.borderColor='#e2e8f0'; this.style.backgroundColor='#f8fafc'">
-                            <span style="font-size: 22px;">🤝</span> 
-                            <div style="text-align: left;">
-                                <div style="font-size: 15px; font-weight: 700;">Laporan Kemitraan</div>
-                                <div style="font-size: 11px; color: #64748b;">Rekapitulasi Bagi Hasil Desa</div>
-                            </div>
-                        </a>
-
                     </div>
                 `,
-                showConfirmButton: false,
-                showCloseButton: true,
-                width: '450px',
-                padding: '2em',
-                color: '#0f172a',
-                background: '#fff',
-                backdrop: `rgba(15, 23, 42, 0.8)`
+                showConfirmButton: false, showCloseButton: true, width: '450px', padding: '2em', color: '#0f172a', background: '#fff', backdrop: `rgba(15, 23, 42, 0.8)`
             });
         }
-       // ==========================================
-        // KODE PENGGERAK PETA MODERN KAWAN NET
+
         // ==========================================
-        
-        // 1. Inisialisasi Peta (Titik tengah Pekalongan)
+        // 5. KODE PENGGERAK PETA MODERN
+        // ==========================================
         const map = L.map('map', {
-            zoomControl: false, // Matikan tombol zoom standar
-            attributionControl: false // Matikan tulisan Leaflet standar
+            zoomControl: false,
+            attributionControl: false
         }).setView([-6.8898, 109.6745], 13); 
 
-        // 2. Pasang Peta Dasar Modern (CartoDB Voyager - Terang & Bersih)
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
-            maxZoom: 20
-        }).addTo(map);
-
-        // Pasang Label Jalan (Opsional, agar tetap terbaca)
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', { maxZoom: 20 }).addTo(map);
         L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png').addTo(map);
-
-        // Tambahkan tombol zoom di pojok kanan bawah agar lebih rapi
         L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-        // 3. Memanggil Titik Jaringan dari Server
         fetch(urlAPI + "?aksi=peta")
             .then(res => res.json())
             .then(data => {
                 data.forEach(p => {
                     if(p.lat && p.lng) {
                         const isAktif = (p.status === 'Aktif');
+                        const warnaUtama = isAktif ? '#2563eb' : '#ef4444'; 
+                        const warnaCyan  = isAktif ? '#06b6d4' : '#f97316'; 
                         
-                        // Set Warna Gradasi (Aktif = Blue/Cyan, Lainnya = Merah/Orange)
-                        const warnaUtama = isAktif ? '#2563eb' : '#ef4444'; // Biru atau Merah
-                        const warnaCyan  = isAktif ? '#06b6d4' : '#f97316'; // Cyan atau Orange
-                        
-                        // Gabungan Denyut dan Titik Utama dalam Satu Container
                         const modernMarkerHtml = `
                             <div style="position:relative; width:18px; height:18px; display:flex; align-items:center; justify-content:center;">
                                 <div style="position:absolute; width:100%; height:100%; border-radius:50%; background:${warnaUtama}; animation:pulse-modern 2s infinite;"></div>
                                 <div style="position:relative; width:10px; height:10px; border-radius:50%; background:linear-gradient(135deg, ${warnaUtama}, ${warnaCyan}); border:2px solid white; box-shadow:0 0 10px rgba(37,99,235,0.4);"></div>
-                            </div>
-                        `;
+                            </div>`;
 
-                        // Tampilkan Titik di Peta menggunakan DivIcon
                         L.marker([p.lat, p.lng], {
-                            icon: L.divIcon({
-                                className: 'modern-marker',
-                                html: modernMarkerHtml,
-                                iconSize: [18, 18],
-                                iconAnchor: [9, 9]
-                            })
+                            icon: L.divIcon({ className: 'modern-marker', html: modernMarkerHtml, iconSize: [18, 18], iconAnchor: [9, 9] })
                         })
                         .addTo(map)
-                        // Popup Kaca yang sudah didesain di CSS atas
                         .bindPopup(`
                             <div style="min-width:200px; padding: 10px 0;">
                                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid rgba(0,0,0,0.05);">
