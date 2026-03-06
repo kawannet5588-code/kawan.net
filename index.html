@@ -9,7 +9,6 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <style>
@@ -23,11 +22,16 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
         
-        html { scroll-behavior: smooth; scroll-padding-top: 100px; } 
+        /* Disesuaikan karena ada top-bar promo */
+        html { scroll-behavior: smooth; scroll-padding-top: 135px; } 
         body { background-color: var(--light); color: var(--dark); overflow-x: hidden; }
 
+        /* FITUR 4: TOP BAR PROMO BERJALAN */
+        .top-bar { position: fixed; top: 0; left: 0; width: 100%; height: 35px; background: #ef4444; color: white; display: flex; align-items: center; z-index: 1001; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; box-shadow: 0 2px 10px rgba(239, 68, 68, 0.4);}
+        .top-bar marquee { width: 100%; }
+
         nav { 
-            position: fixed; top: 0; width: 100%; z-index: 1000;
+            position: fixed; top: 35px; width: 100%; z-index: 1000;
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255,255,255,0.3);
@@ -35,7 +39,7 @@
             box-shadow: 0 4px 30px rgba(0,0,0,0.03);
         }
         .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .logo img { height: 70px; } /* Dikecilkan sedikit agar rapi di navbar */
+        .logo img { height: 80px; } 
         .logo span { font-weight: 800; font-size: 20px; color: var(--dark); letter-spacing: -0.5px; }
         
         .nav-links { display: flex; gap: 30px; }
@@ -43,7 +47,7 @@
         .nav-links a:hover { color: var(--primary); }
 
         header { 
-            padding: 180px 5% 100px; 
+            padding: 200px 5% 100px; /* Ditambah sedikit karena ada top bar */
             text-align: center; 
             background: radial-gradient(circle at top, #eff6ff 0%, var(--light) 80%);
             position: relative;
@@ -60,7 +64,6 @@
         }
         .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 35px -5px rgba(37, 99, 235, 0.5); }
 
-        /* SEKSI BARU: LOGO MITRA */
         .partner-section { background: white; padding: 40px 5%; text-align: center; border-bottom: 1px solid #e2e8f0; border-top: 1px solid #e2e8f0;}
         .partner-text { font-size: 12px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 25px; }
         .partner-logos { display: flex; justify-content: center; flex-wrap: wrap; gap: 40px; align-items: center; opacity: 0.5; filter: grayscale(100%); transition: 0.3s;}
@@ -94,12 +97,21 @@
         .card.popular .btn-outline { background: var(--primary); color: white; border-color: var(--primary); }
         .card.popular .btn-outline:hover { background: #1d4ed8; }
 
-        /* SEKSI BARU: TESTIMONI */
         .testi-card { background: white; padding: 30px; border-radius: 20px; border: 1px solid #f1f5f9; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05); }
         .stars { color: #f59e0b; font-size: 18px; margin-bottom: 15px; letter-spacing: 2px;}
         .testi-text { font-style: italic; color: #475569; font-size: 15px; line-height: 1.6; margin-bottom: 20px; }
         .testi-user { font-weight: 700; color: var(--dark); font-size: 16px; }
         .testi-role { color: #94a3b8; font-size: 13px; }
+
+        /* FITUR 2: CSS UNTUK FAQ ACCORDION */
+        .faq-container { max-width: 800px; margin: 0 auto; text-align: left; }
+        details { background: white; border: 1px solid #e2e8f0; border-radius: 16px; margin-bottom: 15px; padding: 20px; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+        details[open] { border-color: var(--primary); box-shadow: 0 10px 30px rgba(37,99,235,0.08); }
+        summary { font-weight: 700; font-size: 16px; color: var(--dark); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; outline: none; }
+        summary::-webkit-details-marker { display: none; }
+        summary::after { content: '+'; font-size: 24px; color: var(--primary); font-weight: 400; transition: 0.3s; line-height: 1;}
+        details[open] summary::after { content: '−'; }
+        .faq-content { padding-top: 15px; color: var(--gray); font-size: 15px; line-height: 1.6; border-top: 1px dashed #e2e8f0; margin-top: 15px; }
 
         .cek-box { max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 24px; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.08); text-align: center; border: 1px solid #f1f5f9;}
         .input-group { display: flex; gap: 10px; margin-top: 20px; }
@@ -115,6 +127,10 @@
         .staff-link { color: #cbd5e1; font-size: 12px; text-decoration: none; transition: 0.3s; }
         .staff-link:hover { color: var(--primary); }
 
+        /* FITUR 1: WA MELAYANG CSS */
+        .float-wa { position: fixed; bottom: 30px; right: 30px; background-color: #25d366; color: #fff; padding: 12px 24px; border-radius: 50px; font-size: 15px; font-weight: 700; text-decoration: none; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3); z-index: 9999; display: flex; align-items: center; gap: 10px; transition: 0.3s; border: 2px solid white; }
+        .float-wa:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4); background-color: #16a34a; }
+
         @media (max-width: 768px) {
             header h1 { font-size: 38px; }
             .nav-links { display: none; }
@@ -122,6 +138,8 @@
             .card.popular:hover { transform: translateY(-10px); }
             .input-group { flex-direction: column; }
             .input-group button { padding: 16px; }
+            .float-wa { bottom: 20px; right: 20px; padding: 12px 20px; font-size: 14px; }
+            .float-wa span { display: none; /* Sembunyikan teks di HP biar jadi bulet aja kalau kepanjangan, tapi kita biarkan teksnya sementara */ }
         }
             
         @keyframes pulse-modern { 0% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(2); opacity: 0; } 100% { transform: scale(1); opacity: 0; } }
@@ -135,6 +153,12 @@
 </head>
 <body>
 
+    <div class="top-bar">
+        <marquee scrollamount="5" onmouseover="this.stop();" onmouseout="this.start();">
+            🎉 PROMO SPESIAL: Pemasangan Baru Bulan Ini GRATIS Biaya Instalasi! Terbatas untuk 20 Pelanggan Pertama. Hubungi Admin Kawan Net Sekarang Juga! 🎉
+        </marquee>
+    </div>
+
     <nav data-aos="fade-down" data-aos-duration="800">
         <a href="#" class="logo">
             <img src="https://lh3.googleusercontent.com/d/1v7aYOpLRpcM9iQM_mbmR2BQJXOm6iyij" alt="Logo Kawan Net">
@@ -143,8 +167,8 @@
         <div class="nav-links">
             <a href="#paket">Paket Internet</a>
             <a href="#testimoni">Ulasan Warga</a>
-            <a href="#cek-tagihan">Layanan Pelanggan</a>
-            <a href="https://wa.me/6285642527132" target="_blank" style="color: var(--primary); background: #eff6ff; padding: 8px 20px; border-radius: 50px;">Hubungi Kami</a>
+            <a href="#faq">FAQ</a>
+            <a href="#cek-tagihan">Portal Pelanggan</a>
         </div>
     </nav>
 
@@ -223,7 +247,7 @@
             <div class="testi-card" data-aos="fade-up" data-aos-delay="100">
                 <div class="stars">★★★★★</div>
                 <p class="testi-text">"Semenjak pakai Kawan Net, anak-anak belajar online sangat lancar. Harganya juga sangat terjangkau untuk ukuran warga desa. Mantap!"</p>
-                <div class="testi-user">Pak Wawan</div>
+                <div class="testi-user">Bapak Wawan</div>
                 <div class="testi-role">Pelanggan Paket Keluarga</div>
             </div>
             <div class="testi-card" data-aos="fade-up" data-aos-delay="200">
@@ -235,13 +259,47 @@
             <div class="testi-card" data-aos="fade-up" data-aos-delay="300">
                 <div class="stars">★★★★★</div>
                 <p class="testi-text">"Buat mabar Mobile Legends ping-nya stabil banget nggak pernah merah. Nonton Netflix di Smart TV juga lancar jaya tanpa buffering."</p>
-                <div class="testi-user">Rio</div>
+                <div class="testi-user">Mas Rio</div>
                 <div class="testi-role">Pelanggan Paket Pro</div>
             </div>
         </div>
     </section>
 
-    <section id="cek-tagihan" style="background: var(--light);">
+    <section id="faq" style="background: var(--light); border-top: 1px solid #f1f5f9;">
+        <div class="section-header" data-aos="fade-up">
+            <h2>Pertanyaan Seputar Kawan Net</h2>
+            <p>Temukan jawaban cepat untuk pertanyaan yang paling sering ditanyakan warga.</p>
+        </div>
+        
+        <div class="faq-container" data-aos="fade-up" data-aos-delay="100">
+            <details>
+                <summary>Berapa biaya pemasangan awal Kawan Net?</summary>
+                <div class="faq-content">
+                    Biaya pemasangan awal sangat bervariasi tergantung dari jarak rumah Anda ke tiang (ODP) terdekat kami. Kami sering mengadakan promo gratis biaya pasang, jadi pastikan Anda menghubungi admin via WhatsApp untuk mendapatkan penawaran terbaik bulan ini.
+                </div>
+            </details>
+            <details>
+                <summary>Apakah ada batasan kuota (FUP) setiap bulannya?</summary>
+                <div class="faq-content">
+                    Tidak ada! Kawan Net 100% Unlimited tanpa batas kuota atau FUP. Anda bebas mengunduh, menonton film, atau bermain game sepanjang bulan tanpa takut kecepatan diturunkan karena kehabisan kuota.
+                </div>
+            </details>
+            <details>
+                <summary>Bagaimana jika internet mengalami gangguan atau kabel putus?</summary>
+                <div class="faq-content">
+                    Tim teknisi Kawan Net *standby* di area lokal Pekalongan. Jika ada kendala, Anda cukup lapor melalui "Portal Pelanggan" di website ini atau chat WhatsApp admin. Teknisi kami akan segera meluncur ke lokasi Anda untuk perbaikan tanpa dikenakan biaya tambahan (kecuali alat hilang/rusak disengaja).
+                </div>
+            </details>
+            <details>
+                <summary>Apakah router/modem menjadi hak milik?</summary>
+                <div class="faq-content">
+                    Perangkat router dan modem ONT adalah fasilitas pinjam pakai selama Anda berlangganan Kawan Net. Jika suatu saat Anda berhenti berlangganan, tim teknisi kami akan menarik kembali perangkat tersebut.
+                </div>
+            </details>
+        </div>
+    </section>
+
+    <section id="cek-tagihan" style="background: white; border-top: 1px solid #f1f5f9;">
         <div class="section-header" data-aos="fade-up">
             <h2>Portal Pelanggan</h2>
             <p>Cek status jaringan dan informasi layanan Anda secara mandiri.</p>
@@ -272,7 +330,7 @@
         </div>
     </section>
 
-    <section id="peta-jaringan" style="background: white;">
+    <section id="peta-jaringan" style="background: var(--light);">
         <div class="section-header" data-aos="fade-up">
             <h2>Jangkauan Kawan Net</h2>
             <p>Peta sebaran pelanggan aktif kami di wilayah Pekalongan dan sekitarnya.</p>
@@ -291,19 +349,15 @@
         <a href="#" class="staff-link" onclick="bukaPortalStaf(event)">🔒 Portal Staf Internal</a>
     </footer>
 
+    <a href="https://wa.me/6285642527132" target="_blank" class="float-wa">
+        <span style="font-size: 24px; line-height: 1;">💬</span> Chat Admin Kawan Net
+    </a>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     
     <script>
-        // INISIALISASI ANIMASI (Berjalan otomatis saat discroll)
-        AOS.init({
-            duration: 800, // Kecepatan animasi (milidetik)
-            once: true,    // Animasi hanya jalan sekali saat discroll ke bawah
-            offset: 100    // Jarak dari bawah layar sebelum animasi dimulai
-        });
+        AOS.init({ duration: 800, once: true, offset: 100 });
 
-        // ==========================================
-        // SCRIPT APLIKASI BAPAK (TIDAK ADA YANG DIUBAH)
-        // ==========================================
         const urlAPI = "https://script.google.com/macros/s/AKfycbyY3j3lZo9NvMM4-zkCb42wrbjyTYtxsl3mLB5w_LNb6m8qGvyP2jXpSRFlsKastL1tCg/exec"; 
         
         document.querySelectorAll('.nav-links a[href^="#"], .btn-primary[href^="#"]').forEach(anchor => {
@@ -312,7 +366,8 @@
                 const targetId = this.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
-                    const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - 100;
+                    // Disesuaikan jarak offsetnya karena ada top-bar promo
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - 130;
                     window.scrollTo({ top: targetPosition, behavior: 'smooth' });
                 }
             });
